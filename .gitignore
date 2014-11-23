@@ -12,3 +12,4 @@
 UPGRADE*.md
 LICENSE
 composer.lock
+.idea
