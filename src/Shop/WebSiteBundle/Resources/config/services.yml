@@ -1,0 +1,4 @@
+services:
+#    web_site.example:
+#        class: Shop\WebSiteBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
