@@ -1,3 +1,0 @@
-web_site_homepage:
-    path:     /
-    defaults: { _controller: WebSiteBundle:Index:index }
