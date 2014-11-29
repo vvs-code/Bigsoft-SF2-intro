@@ -3,11 +3,8 @@
 namespace Shop\WebSiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Shop\CommonBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-
-class IndexController extends Controller\CommonController
+class IndexController extends \Shop\CommonBundle\Controller\CommonController
 {
     /**
      * @Route("/")
