@@ -2,16 +2,18 @@
 
 namespace Shop\WebSiteBundle\Controller;
 
-use Shop\CommonBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Shop\CommonBundle\Controller;
 
-class IndexController extends Controller\AbstractController
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
+
+class IndexController extends Controller\CommonController
 {
     /**
      * @Route("/")
      */
     public function indexAction()
     {
-        return $this->render('WebSiteBundle:Index:index.html.twig');
+        return $this->render('Index/index.html.twig');
     }
 }
