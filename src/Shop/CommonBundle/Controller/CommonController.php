@@ -3,14 +3,15 @@
 namespace Shop\CommonBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 
 class CommonController
 {
-    protected $tplLoader = NULL;
+    protected $templating;
 
-    public function __construct()
+    public function __construct(EngineInterface $templating)
     {
-        $this->setLoader();
+        $this->templating = $templating;
     }
 
     protected function setLoader()
