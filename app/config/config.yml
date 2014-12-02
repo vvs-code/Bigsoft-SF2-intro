@@ -79,7 +79,8 @@ services:
     shop.common.common_controller:
         abstract: true
         class: %shop.common.common_controller%
-        arguments: ["@templating"]
+        calls:
+          - [setTemplating, ["@templating"]]
 
     shop.website.index_controller:
         class: %shop.website.index_controller%
