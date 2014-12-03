@@ -1,8 +1,12 @@
 parameters:
-    shop.common.common_controller: Shop\CommonBundle\Controller\CommonController
     shop.website.index_controller: Shop\WebSiteBundle\Controller\IndexController
 
 services:
   shop.website.index_controller:
       class: %shop.website.index_controller%
       parent: shop.common.common_controller
+
+router:
+  web_site:
+    resource: "@WebSiteBundle/Controller"
+    type:     annotation

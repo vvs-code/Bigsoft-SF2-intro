@@ -12,7 +12,7 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
 class CommonController
 {
     /**
-     * @var TwigEngine Should contain templating-engine instance
+     * @var EngineInterface Should contain templating-engine instance
      */
     protected $templating;
 
@@ -21,10 +21,9 @@ class CommonController
      * @param TwigEngine $templating
      * @return CommonController this
      */
-    public function setTemplating(TwigEngine $templating)
+    public function setTemplating(EngineInterface $templating)
     {
         $this->templating = $templating;
-        return $this;
     }
 
     /**
