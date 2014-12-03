@@ -1,5 +1,6 @@
 parameters:
     shop.common.common_controller: Shop\CommonBundle\Controller\CommonController
+    shop.website.index_controller: Shop\WebSiteBundle\Controller\IndexController
 
 services:
   shop.website.index_controller:
