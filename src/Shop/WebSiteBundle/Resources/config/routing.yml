@@ -1,4 +1,3 @@
-router:
-  web_site:
-    resource: "@WebSiteBundle/Controller"
-    type:     annotation
+web_site:
+  resource: "@WebSiteBundle/Controller"
+  type:     annotation

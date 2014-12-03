@@ -2,7 +2,8 @@
 
 namespace Shop\CommonBundle\Controller;
 
-use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Component\Templating;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -12,7 +13,7 @@ use Symfony\Bundle\TwigBundle\TwigEngine;
 class CommonController
 {
     /**
-     * @var EngineInterface Should contain templating-engine instance
+     * @var  EngineInterface Should contain templating-engine instance
      */
     protected $templating;
 
@@ -21,7 +22,7 @@ class CommonController
      * @param TwigEngine $templating
      * @return CommonController this
      */
-    public function setTemplating(EngineInterface $templating)
+    public function setTemplating(Templating\EngineInterface $templating)
     {
         $this->templating = $templating;
     }
@@ -34,6 +35,6 @@ class CommonController
      */
     public function render($view, $parameters = [])
     {
-        return $this->templating->renderResponse($view, $parameters);
+        return new Response($this->templating->render($view, $parameters));
     }
 }
