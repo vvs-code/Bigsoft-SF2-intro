@@ -2,7 +2,7 @@
 
 namespace Shop\CommonBundle\Controller;
 
-use Symfony\Component\Templating;
+use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -22,7 +22,7 @@ class CommonController
      * @param TwigEngine $templating
      * @return CommonController this
      */
-    public function setTemplating(Templating\EngineInterface $templating)
+    public function setTemplating(EngineInterface $templating)
     {
         $this->templating = $templating;
     }
