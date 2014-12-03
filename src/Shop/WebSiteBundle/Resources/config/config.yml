@@ -1,14 +1,7 @@
 parameters:
     shop.common.common_controller: Shop\CommonBundle\Controller\CommonController
-    shop.website.index_controller: Shop\WebSiteBundle\Controller\IndexController
 
 services:
-  shop.common.common_controller:
-      abstract: true
-      class: %shop.common.common_controller%
-      calls:
-        - [setTemplating, ["@templating"]]
-
   shop.website.index_controller:
       class: %shop.website.index_controller%
       parent: shop.common.common_controller
