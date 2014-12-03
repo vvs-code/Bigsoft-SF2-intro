@@ -33,7 +33,7 @@ class CommonController
      * @param array $parameters parametrs passed to view
      * @return Response
      */
-    public function render($view, $parameters = array())
+    public function render($view, $parameters = [])
     {
         return $this->templating->renderResponse($view, $parameters);
     }
