@@ -9,7 +9,8 @@ class CommonController
 {
     protected $templating;
 
-    public function setTemplating(TwigEngine $templating){
+    public function setTemplating(TwigEngine $templating)
+    {
         $this->templating = $templating;
     }
 
