@@ -1,0 +1,9 @@
+parameters:
+    shop.common.common_controller: Shop\CommonBundle\Controller\CommonController
+
+services:
+  shop.common.common_controller:
+      abstract: true
+      class: %shop.common.common_controller%
+      calls:
+        - [setTemplating, ["@templating"]]
