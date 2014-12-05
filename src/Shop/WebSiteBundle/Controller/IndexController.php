@@ -17,4 +17,14 @@ class IndexController extends Controller\CommonController
     {
         return $this->render('WebSiteBundle:Index:index.html.twig');
     }
+
+    /**
+     * @Route("/page/{page}", requirements={"page" = "\w+"})
+     * @param $page
+     */
+    public function pageAction($page)
+    {
+        return $this->render('WebSiteBundle:Index:'.$page.'.html.twig');
+    }
+
 }
