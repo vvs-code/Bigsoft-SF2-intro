@@ -1,14 +1,12 @@
-{% extends 'WebSiteBundle:_common:_layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% macro printItem(item) %}
     <img src="{{ item.img }}" align="left"/><strong>{{ item.title }}</strong>
-    <p>{{ item.description }}</p>
+    <p>{{  item.decriptions|raw }}</p>
 {% endmacro %}
 
 {% block body %}
-    {{ dump(items) }}
     {{ include('WebSiteBundle:_common:_header.html.twig') }}
-
     <ul class="items">
         {% for item in items %}
             <li>{{ _self.printItem(item) }}</li>
