@@ -27,4 +27,12 @@ class IndexController extends Controller\CommonController
         return $this->render('WebSiteBundle:Index:'.$page.'.html.twig');
     }
 
+    /**
+     * @Route("/cart")
+     */
+    public function cartAction()
+    {
+        return $this->render('WebSiteBundle:Index:cart.html.twig');
+    }
+
 }
