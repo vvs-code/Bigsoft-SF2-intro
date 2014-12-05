@@ -1,7 +1,20 @@
 {% extends 'WebSiteBundle:_common:_layout.html.twig' %}
+
+{% macro printItem(item) %}
+    <img src="{{ item.img }}" align="left"/><strong>{{ item.title }}</strong>
+    <p>{{ item.description }}</p>
+{% endmacro %}
+
 {% block body %}
+    {{ dump(items) }}
     {{ include('WebSiteBundle:_common:_header.html.twig') }}
-    Hello, world!
+
+    <ul class="items">
+        {% for item in items %}
+            <li>{{ _self.printItem(item) }}</li>
+        {% endfor %}
+    </ul>
+
     {{ include('WebSiteBundle:_common:_footer.html.twig') }}
-{%endblock%}
+{% endblock %}
 
