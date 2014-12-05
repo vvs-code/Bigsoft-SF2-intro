@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% macro printItem(item) %}
-    <img src="{{ item.img }}" align="left"/><strong>{{ item.title }}</strong>
+    <img src="{{ item.img }}" align="left"/><strong>{{ item.title }}</strong><button>Buy</button>
     <p>{{  item.decriptions|raw }}</p>
 {% endmacro %}
 
