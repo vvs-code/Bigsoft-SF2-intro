@@ -1,4 +1,6 @@
-{% extends 'WebSiteBundle:_common:_layout.html.twig' %}
-{% block content %}
+{% extends 'base.html.twig' %}
+{% block body %}
+    {{ include('WebSiteBundle:_common:_header.html.twig') }}
     Put cart here
+    {{ include('WebSiteBundle:_common:_footer.html.twig') }}
 {%endblock%}

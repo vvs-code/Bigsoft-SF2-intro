@@ -1,5 +1,7 @@
 {% extends 'WebSiteBundle:_common:_layout.html.twig' %}
-{% block content %}
+{% block body %}
+    {{ include('WebSiteBundle:_common:_header.html.twig') }}
     Hello, world!
+    {{ include('WebSiteBundle:_common:_footer.html.twig') }}
 {%endblock%}
 
