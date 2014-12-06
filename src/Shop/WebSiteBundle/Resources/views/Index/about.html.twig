@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
+{% import 'WebSiteBundle:_common:macros.html.twig' as common %}
 {% block body %}
-    {{ include('WebSiteBundle:_common:_header.html.twig') }}
+    {{ common.header() }}
+
     Put about  here
-    {{ include('WebSiteBundle:_common:_footer.html.twig') }}
+
+    {{ common.footer() }}
 {%endblock%}
