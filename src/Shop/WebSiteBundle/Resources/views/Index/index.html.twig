@@ -1,17 +1,12 @@
 {% extends 'base.html.twig' %}
 {% import 'WebSiteBundle:_common:macros.html.twig' as common %}
 
-{% macro printItem(item) %}
-    <img src="{{ item.img }}" align="left"/><strong>{{ item.title }}</strong><button>Buy</button>
-    <p>{{ item.decriptions|raw }}</p>
-{% endmacro %}
-
 {% block body %}
     {{ common.header() }}
 
     <ul class="items">
         {% for item in items %}
-            <li>{{ _self.printItem(item) }}</li>
+            <li>{{ common.printItem(item) }}</li>
         {% endfor %}
     </ul>
 
