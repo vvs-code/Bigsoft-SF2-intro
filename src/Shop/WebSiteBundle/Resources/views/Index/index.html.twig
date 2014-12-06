@@ -8,6 +8,8 @@
     <ul class="items">
         {% for item in items %}
             <li>{{ common.printItem(item) }}</li>
+        {% else %}
+            <li>No items</li>
         {% endfor %}
     </ul>
 
