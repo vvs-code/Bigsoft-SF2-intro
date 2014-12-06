@@ -8,7 +8,9 @@
     </head>
     <body>
         {% import 'macros.html.twig' as common %}
+        {% block header %}{{ common.header() }}{% endblock %}
         {% block body %}{% endblock %}
+        {% block footer %}{{ common.footer() }}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

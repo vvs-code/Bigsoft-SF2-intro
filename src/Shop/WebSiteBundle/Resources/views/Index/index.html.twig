@@ -2,8 +2,6 @@
 
 {% block title %}Main page{% endblock %}
 {% block body %}
-    {{ common.header() }}
-
     <ul class="items">
         {% for item in items %}
             <li>{{ common.printItem(item) }}</li>
@@ -11,7 +9,5 @@
             <li>No items</li>
         {% endfor %}
     </ul>
-
-    {{ common.footer() }}
 {% endblock %}
 
