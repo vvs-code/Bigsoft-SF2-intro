@@ -1,11 +1,16 @@
 {% macro header() %}
+    {% set menuList = [
+        {'name' : 'Main', 'route' : 'main_page'},
+        {'name' : 'Contacts', 'route' : 'contacts_page'},
+        {'name' : 'About', 'route' : 'about_page'},
+        { 'name' : 'Cart', 'route' : 'cart_page'}
+    ] %}
     <div class="header">
         <h1>Page title</h1>
         <ul>
-            <li><a href="/">Main</a></li>
-            <li><a href="/page/contacts">Contacts</a></li>
-            <li><a href="/page/about">About</a></li>
-            <li><a href="/cart">Cart</a></li>
+            {% for menu in menuList %}
+                <li><a href="{{ path(menu.route) }}">{{ menu.name }}</a></li>
+            {% endfor %}
         </ul>
     </div>
 {% endmacro %}

@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class IndexController extends Controller\CommonController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="main_page")
      */
     public function indexAction()
     {
@@ -23,7 +23,7 @@ class IndexController extends Controller\CommonController
     }
 
     /**
-     * @Route("/cart")
+     * @Route("/cart", name="cart_page")
      */
     public function cartAction()
     {
