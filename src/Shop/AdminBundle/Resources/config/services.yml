@@ -1,0 +1,7 @@
+parameters:
+    shop.admin.default_controller: Shop\AdminBundle\Controller\DefaultController
+
+services:
+  shop.admin.default_controller:
+      class: %shop.admin.default_controller%
+      parent: shop.common.common_controller
