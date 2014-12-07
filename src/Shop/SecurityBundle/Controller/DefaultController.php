@@ -19,9 +19,25 @@ class DefaultController extends Controller\CommonController
     }
 
     /**
-     * @Route("/login")
+     * @Route("/login", name="shop_login")
      */
     public function loginAction()
+    {
+        return $this->render('ShopSecurityBundle:Default:login.html.twig');
+    }
+
+    /**
+     * @Route("/login_check", name="shop_login_check")
+     */
+    public function loginCheckAction()
+    {
+        return $this->render('ShopSecurityBundle:Default:login.html.twig');
+    }
+
+    /**
+     * @Route("/logout", name="shop_logout")
+     */
+    public function logoutAction()
     {
         return $this->render('ShopSecurityBundle:Default:login.html.twig');
     }

@@ -1,4 +1,4 @@
-<form method="post">
+<form method="post" action="{{ path('shop_login_check') }}">
     <label for="login">Login</label>
     <input name="login" id="login" />
 
@@ -8,5 +8,5 @@
     <label for="remember-me">Remeber me</label>
     <input type="checkbox" name="remember-me" id="remember-me" />
 
-    <input type="button" value="Login" />
+    <input type="submit" value="Login" />
 </form>
