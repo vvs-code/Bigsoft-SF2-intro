@@ -1,0 +1,7 @@
+parameters:
+    shop.security.default_controller: Shop\SecurityBundle\Controller\DefaultController
+
+services:
+  shop.security.default_controller:
+      class: %shop.security.default_controller%
+      parent: shop.common.common_controller
