@@ -51,7 +51,7 @@ security:
           pattern: ^/admin
           security: true
           form_login:
-              check_path: shop_login_check
+              check_path: login_check
               login_path: shop_login
 
 
