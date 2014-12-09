@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller\CommonController
 {
     /**
-     * @Route("/admin")
+     * @Route("/")
      */
     public function indexAction()
     {

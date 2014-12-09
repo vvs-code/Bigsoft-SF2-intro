@@ -12,14 +12,6 @@ use Symfony\Component\Security\Core\SecurityContext;
 class DefaultController extends Controller\CommonController
 {
     /**
-     * @Route("/security")
-     */
-    public function indexAction()
-    {
-        return $this->render('ShopSecurityBundle:Default:index.html.twig');
-    }
-
-    /**
      * @Route("/login", name="shop_login")
      */
     public function loginAction()
@@ -41,3 +33,4 @@ class DefaultController extends Controller\CommonController
         ));
     }
 }
+
