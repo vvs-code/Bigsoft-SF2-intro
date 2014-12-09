@@ -40,12 +40,4 @@ class DefaultController extends Controller\CommonController
             'error'         => $error,
         ));
     }
-
-    /**
-     * @Route("/logout", name="shop_logout")
-     */
-    public function logoutAction()
-    {
-        return $this->render('ShopSecurityBundle:Default:login.html.twig');
-    }
 }

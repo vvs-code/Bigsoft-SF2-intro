@@ -26,37 +26,28 @@ security:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        # the login page has to be accessible for everybody
-        demo_login:
-            pattern:  ^/demo/secured/login$
-            security: false
-
-        # secures part of the application
-        demo_secured_area:
-            pattern:    ^/demo/secured/
-            # it's important to notice that in this case _demo_security_check and _demo_login
-            # are route names and that they are specified in the AcmeDemoBundle
-            form_login:
-                check_path: _demo_security_check
-                login_path: _demo_login
-            logout:
-                path:   _demo_logout
-                target: _demo
-            #anonymous: ~
-            #http_basic:
-            #    realm: "Secured Demo Area"
-
-        #shop_admin
         shop_admin:
-          pattern: ^/admin
+          pattern: ^/
           security: true
+          anonymous: ~
+          logout:
+            path:   logout
+            target: /
+            invalidate_session: true
           form_login:
-              check_path: login_check
-              login_path: shop_login
-
+            check_path: login_check
+            login_path: shop_login
+          remember_me:
+            key:      "%secret%"
+            lifetime: 31536000 # 365 days in seconds
+            path:     /
+            domain:   ~ # Defaults to the current domain from $_SERVERL
 
     # with these settings you can restrict or allow access for different parts
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
     access_control:
-        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
