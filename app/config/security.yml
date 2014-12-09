@@ -17,6 +17,7 @@ security:
                 users:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                    root: { password: root, roles: [ 'ROLE_ADMIN' ] }
 
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
@@ -58,4 +59,4 @@ security:
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
     access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

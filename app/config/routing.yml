@@ -9,3 +9,6 @@ admin:
 webSite:
     resource: "@WebSiteBundle/Resources/config/routing.yml"
     prefix:   /
+
+login_check:
+    pattern:   /admin/login_check

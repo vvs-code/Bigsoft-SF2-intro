@@ -1,12 +1,27 @@
-<form method="post" action="{{ path('shop_login_check') }}">
-    <label for="login">Login</label>
-    <input name="login" id="login" />
+{% extends 'base.html.twig' %}
+{% block title %}Login page{% endblock %}
+{% block body %}
+    {% if error %}
+        <div>{{ error.message }}</div>
+    {% endif %}
+    <h3>User Dump:</h3>
+    <pre>
+        {{ dump(app.user) }}
+    </pre>
 
-    <label for="password">Password</label>
-    <input name="password" id="password" autocomplete="off" type="password" />
+    <form action="{{ path('login_check') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
-    <label for="remember-me">Remeber me</label>
-    <input type="checkbox" name="remember-me" id="remember-me" />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" />
 
-    <input type="submit" value="Login" />
-</form>
+        <input type="hidden" name="_target_path" value="/admin" />
+        
+        <input type="submit" name="login" />
+    </form>
+{% endblock %}
+
+
+
+
