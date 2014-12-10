@@ -37,11 +37,4 @@ class CommonController
         return new Response($this->templating->render($view, $parameters));
     }
 
-    /**
-     * @return Request
-     */
-    protected function getRequest()
-    {
-        return $this->request;
-    }
 }
