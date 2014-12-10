@@ -4,9 +4,6 @@ namespace Shop\CommonBundle\Controller;
 
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Request;
-
 
 /**
  * Class CommonController
@@ -18,11 +15,6 @@ class CommonController
      * @var  EngineInterface Should contain templating-engine instance
      */
     protected $templating;
-
-    /**
-     * @var  Request Should contain request service
-     */
-    protected $request;
 
     /**
      * Set templating engine
@@ -43,14 +35,6 @@ class CommonController
     public function render($view, $parameters = [])
     {
         return new Response($this->templating->render($view, $parameters));
-    }
-
-    /**
-     * @param Request $req
-     */
-    public function setRequest(RequestStack $request_stack)
-    {
-        $this->request = $request_stack->getCurrentRequest();
     }
 
     /**

@@ -7,4 +7,3 @@ services:
       class: %shop.common.common_controller%
       calls:
         - [setTemplating, ["@templating"]]
-        - [setRequest, ["@request_stack"]]

@@ -5,6 +5,7 @@ namespace Shop\SecurityBundle\Controller;
 use Shop\CommonBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route(service="shop.security.default_controller")
@@ -14,9 +15,8 @@ class DefaultController extends Controller\CommonController
     /**
      * @Route("/login", name="shop_login")
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
-        $request = $this->getRequest();
         $session = $request->getSession();
 
         // получить ошибки логина, если таковые имеются
