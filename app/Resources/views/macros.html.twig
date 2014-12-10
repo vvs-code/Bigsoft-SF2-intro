@@ -1,40 +1,37 @@
 {% macro header() %}
-    {% set menuList = [
-        {'name' : 'Main', 'route' : path('main_page')},
-        {'name' : 'Contacts', 'route' : path('contacts_page')},
-        {'name' : 'About', 'route' : path('about_page')},
-        { 'name' : 'Cart', 'route' : path('cart_page')},
-    ] %}
-    <div class="header">
-        <h1>Page title</h1>
-        <style>
-            .header-menu li {
-                display: inline-block;
-                width: 15%;
-                border: 1px dotted yellow;
-            }
-        </style>
-        <ul class="header-menu">
-            {% for menu in menuList %}
-                <li><a href="{{ menu.route }}">{{ menu.name }}</a></li>
-            {% endfor %}
-
-            {%  if  app.user %}
-                <li>
-                    <strong>{{ app.user.username }}
-                        {%  if is_granted('ROLE_ADMIN') -%}
-                        , <a href="{{ path('shop_admin_default_index') }}">go to admin page</a>
-                        {% endif %}
-                    </strong>
-                </li>
-                <li>
-                    <form action="{{ path('logout') }}"><button>Logout</button></form>
-                </li>
-            {%  else %}
-                <li><a href="{{ path('shop_login') }}">Log in</a></li>
-            {%  endif %}
-        </ul>
-    </div>
+{% set menuList = [
+    {'name' : 'Main', 'route' : path('main_page')},
+    {'name' : 'Contacts', 'route' : path('contacts_page')},
+    {'name' : 'About', 'route' : path('about_page')},
+    { 'name' : 'Cart', 'route' : path('cart_page')},
+] %}
+<div class="header">
+    <h1>Page title</h1>
+    <style>
+        .header-menu li {
+            display: inline-block;
+            width: 15%;
+            border: 1px dotted yellow;
+        }
+    </style>
+    <ul class="header-menu">
+        {% for menu in menuList %}
+            <li><a href="{{ menu.route }}">{{ menu.name }}</a></li>
+        {% endfor %}
+        {% if  app.user %}
+            <li>
+                <strong>{{ app.user.username }}
+                    {%  if is_granted('ROLE_ADMIN') -%}, <a href="{{ path('shop_admin_index') }}">go to admin page</a>{% endif %}
+                </strong>
+            </li>
+            <li>
+                <form action="{{ path('logout') }}"><button>Logout</button></form>
+            </li>
+        {%  else %}
+            <li><a href="{{ path('shop_login') }}">Log in</a></li>
+        {%  endif %}
+    </ul>
+</div>
 {% endmacro %}
 
 {% macro footer() %}

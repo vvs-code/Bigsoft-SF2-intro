@@ -4,11 +4,6 @@
     {% if error %}
         <div>{{ error.message }}</div>
     {% endif %}
-    <h3>User Dump:</h3>
-    <pre>
-        {{ dump(app.user) }}
-    </pre>
-
     <form action="{{ path('login_check') }}" method="post">
         <label for="username">Username:</label>
         <input type="text" id="username" name="_username" value="{{ last_username }}" />
@@ -18,12 +13,8 @@
         <input type="checkbox" id="remember_me" name="_remember_me" checked />
         <label for="remember_me">Keep me logged in</label>
 
-        <input type="hidden" name="_target_path" value="/admin" />
+        <input type="hidden" name="_target_path" value="{{ path('shop_admin_index') }}" />
         
         <input type="submit" name="login" />
     </form>
 {% endblock %}
-
-
-
-
