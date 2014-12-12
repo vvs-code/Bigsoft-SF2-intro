@@ -2,7 +2,7 @@
 namespace Shop\CommonBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\Role\Role;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
@@ -36,6 +36,17 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Role")
+     * @ORM\JoinTable(name="user_role",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
+     *
+     * @var ArrayCollection $userRoles
+     */
+    private $userRoles;
+
+    /**cls
      *
      */
     public function __construct($name = null, $pass = null)
@@ -46,6 +57,24 @@ class User implements UserInterface
         if (!is_null($pass)) {
             $this->setRawPassword($pass);
         }
+
+        $this->userRoles = new ArrayCollection();
+    }
+
+    /**
+     * Set raw ( not encoded ) password
+     * @param string $password
+     */
+    public function setRawPassword($password)
+    {
+        $this->password = static::encodePassword($password);
+        return $this;
+    }
+
+    public static function encodePassword($pass)
+    {
+        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
+        return $encoder->encodePassword($pass, static::SALT);
     }
 
     /**
@@ -66,12 +95,15 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        $roles = ['IS_AUTHENTICATED_ANONYMOUSLY'];
-        if ($this->getId()) {
-            $roles[] = 'ROLE_ADMIN';
-        }
+        return $this->getUserRoles()->toArray();
+    }
 
-        return $roles;
+    /**
+     * @return ArrayCollection
+     */
+    public function getUserRoles()
+    {
+        return $this->userRoles;
     }
 
     /**
@@ -79,7 +111,7 @@ class User implements UserInterface
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -92,7 +124,7 @@ class User implements UserInterface
      */
     public function getPassword()
     {
-        return $this->_password;
+        return $this->password;
     }
 
     /**
@@ -101,17 +133,7 @@ class User implements UserInterface
      */
     public function setPassword($password)
     {
-        $this->_password = $password;
-        return $this;
-    }
-
-    /**
-     * Set raw ( not encoded ) password
-     * @param string $password
-     */
-    public function setRawPassword($password)
-    {
-        $this->_password = static::encodePassword($password);
+        $this->password = $password;
         return $this;
     }
 
@@ -134,7 +156,7 @@ class User implements UserInterface
      */
     public function getUsername()
     {
-        return $this->_username;
+        return $this->username;
     }
 
     /**
@@ -142,7 +164,7 @@ class User implements UserInterface
      */
     public function setUsername($username)
     {
-        $this->_username = $username;
+        $this->username = $username;
         return $this;
     }
 
@@ -154,10 +176,5 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-    }
-
-    public static function encodePassword($pass) {
-        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
-        return $encoder->encodePassword($pass, static::SALT);
     }
 }
