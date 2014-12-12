@@ -8,8 +8,11 @@ security:
             iterations: 10
 
     providers:
-        main:
-            entity: { class: CommonBundle:User, property: username }
+       main:
+            entity:
+                class: Shop\CommonBundle\Entity\User
+                property: username
+
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]

@@ -10,10 +10,9 @@ use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     const SALT = 'SOME_SALT';
-
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")`
@@ -34,7 +33,6 @@ class User implements UserInterface
      * @var string $password
      */
     private $password;
-
     /**
      * @ORM\ManyToMany(targetEntity="Role")
      * @ORM\JoinTable(name="user_role",
@@ -75,6 +73,24 @@ class User implements UserInterface
     {
         $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
         return $encoder->encodePassword($pass, static::SALT);
+    }
+
+    /**
+     * Serializes the content of the current User object
+     * @return string
+     */
+    public function serialize()
+    {
+        return \json_encode(array($this->username, $this->password, $this->id));
+    }
+
+    /**
+     * Unserializes the given string in the current User object
+     * @param serialized
+     */
+    public function unserialize($serialized)
+    {
+        list($this->username, $this->password, $this->id) = \json_decode($serialized);
     }
 
     /**
