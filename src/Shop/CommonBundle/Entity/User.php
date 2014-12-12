@@ -19,21 +19,21 @@ class User implements UserInterface
      * @ORM\Column(name="id", type="integer")`
      * @ORM\GeneratedValue(strategy="AUTO")
      *
-     * @var integer $_id
+     * @var integer $id
      */
-    private $_id;
+    private $id;
     /**
      * @ORM\Column(name="username", type="string", length=255)
      *
-     * @var string $_username
+     * @var string $username
      */
-    private $_username = "";
+    private $username = "";
     /**
      * @ORM\Column(name="password", type="string", length=255)
      *
-     * @var string $_password
+     * @var string $password
      */
-    private $_password;
+    private $password;
 
     /**
      *
