@@ -1,6 +1,7 @@
 # you can read more about security in the related section of the documentation
 # http://symfony.com/doc/current/book/security.html
 security:
+# See http://symfony.com/doc/current/cookbook/security/entity_provider.html#authenticating-someone-against-a-database
     encoders:
         Shop\CommonBundle\Entity\User:
             algorithm: sha512
