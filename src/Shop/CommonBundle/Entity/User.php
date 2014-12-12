@@ -16,12 +16,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="integer")`
      * @ORM\GeneratedValue(strategy="AUTO")
      *
      * @var integer $_id
      */
-    private $_id;
+    protected $_id;
 
     /**
      * @return int
@@ -36,14 +36,14 @@ class User implements UserInterface
      *
      * @var string $_username
      */
-    private $_username = "";
+    protected $_username = "";
 
     /**
      * @ORM\Column(name="password", type="string", length=255)
      *
      * @var string $_password
      */
-    private $_password = "";
+    protected $_password = "";
 
 
     /**
@@ -51,7 +51,7 @@ class User implements UserInterface
      *
      * @var string $_salt
      */
-    private $_salt = "";
+    protected $_salt = "";
 
     /**
      *
