@@ -4,6 +4,7 @@ namespace Shop\CommonBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 /**
  * @ORM\Entity
@@ -11,8 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
-    const DEFAULT_SALT = 'SOME_SALT';
-    const DEFAULT_PASSWORD = 'demo';
+    const SALT = 'SOME_SALT';
 
     /**
      * @ORM\Id
@@ -21,46 +21,31 @@ class User implements UserInterface
      *
      * @var integer $_id
      */
-    protected $_id;
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->_id;
-    }
-
+    private $_id;
     /**
      * @ORM\Column(name="username", type="string", length=255)
      *
      * @var string $_username
      */
-    protected $_username = "";
-
+    private $_username = "";
     /**
      * @ORM\Column(name="password", type="string", length=255)
      *
      * @var string $_password
      */
-    protected $_password = "";
-
-
-    /**
-     * @ORM\Column(name="salt", type="string", length=255)
-     *
-     * @var string $_salt
-     */
-    protected $_salt = "";
+    private $_password;
 
     /**
      *
      */
-    public function __construct($name = '', $pass = DEFAULT_PASSWORD, $salt = DEFAULT_SALT)
+    public function __construct($name = null, $pass = null)
     {
-        $this->_username = $name;
-        $this->_password = $pass;
-        $this->_salt = $salt;
+        if (!is_null($name)) {
+            $this->setUsername($name);
+        }
+        if (!is_null($pass)) {
+            $this->setRawPassword($pass);
+        }
     }
 
     /**
@@ -82,11 +67,19 @@ class User implements UserInterface
     public function getRoles()
     {
         $roles = ['IS_AUTHENTICATED_ANONYMOUSLY'];
-        if($this->getId()) {
-           $roles[] = 'ROLE_ADMIN';
+        if ($this->getId()) {
+            $roles[] = 'ROLE_ADMIN';
         }
 
         return $roles;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->_id;
     }
 
     /**
@@ -103,6 +96,26 @@ class User implements UserInterface
     }
 
     /**
+     * Set password hash
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->_password = $password;
+        return $this;
+    }
+
+    /**
+     * Set raw ( not encoded ) password
+     * @param string $password
+     */
+    public function setRawPassword($password)
+    {
+        $this->_password = static::encodePassword($password);
+        return $this;
+    }
+
+    /**
      * Returns the salt that was originally used to encode the password.
      *
      * This can return null if the password was not encoded using a salt.
@@ -111,7 +124,7 @@ class User implements UserInterface
      */
     public function getSalt()
     {
-        return $this->_salt;
+        return static::SALT;
     }
 
     /**
@@ -122,25 +135,6 @@ class User implements UserInterface
     public function getUsername()
     {
         return $this->_username;
-    }
-
-    /**
-     * Set password
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->_password = $password;
-        return $this;
-    }
-
-    /**
-     * @param string $salt
-     */
-    public function setSalt($salt)
-    {
-        $this->_salt = $salt;
-        return $this;
     }
 
     /**
@@ -160,5 +154,10 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
+    }
+
+    public static function encodePassword($pass) {
+        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
+        return $encoder->encodePassword($pass, static::SALT);
     }
 }
