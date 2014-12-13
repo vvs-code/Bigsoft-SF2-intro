@@ -7,3 +7,6 @@ services:
       class: %shop.common.common_controller%
       calls:
         - [setTemplating, ["@templating"]]
+
+  shop.common.user_repository:
+      class: CommonBundle\Entity\UserRepository

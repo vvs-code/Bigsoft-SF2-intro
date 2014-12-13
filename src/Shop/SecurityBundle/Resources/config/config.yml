@@ -1,7 +1,13 @@
 parameters:
     shop.security.default_controller: Shop\SecurityBundle\Controller\DefaultController
+    shop.security.user_service: Shop\SecurityBundle\Service\UserService
+    shop.common.user_repository: Shop\CommonBundle\Entity\UserRepository
 
 services:
   shop.security.default_controller:
       class: %shop.security.default_controller%
       parent: shop.common.common_controller
+  shop.security.user_service:
+      class: %shop.security.user_service%
+      arguments: ["@shop.common.user_repository"]
+

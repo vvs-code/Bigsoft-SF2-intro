@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Shop\CommonBundle\Entity\UserRepository")
  * @ORM\Table(name="user")
  */
 class User implements UserInterface, \Serializable
