@@ -43,26 +43,10 @@ class User implements UserInterface, \Serializable
      * @var ArrayCollection $userRoles
      */
     private $userRoles;
-    
+
     public function __construct()
     {
         $this->userRoles = new ArrayCollection();
-    }
-
-    /**
-     * Set raw ( not encoded ) password
-     * @param string $password
-     */
-    public function setRawPassword($password)
-    {
-        $this->password = static::encodePassword($password);
-        return $this;
-    }
-
-    public static function encodePassword($pass)
-    {
-        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
-        return $encoder->encodePassword($pass, static::SALT);
     }
 
     /**

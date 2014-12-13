@@ -8,14 +8,12 @@ use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 class UserService implements UserServiceInterface
 {
-    const SALT = 'SOME_SALT';
     private $userRepository;
 
     public function __construct(UserRepositoryInterface $userRep)
     {
         $this->userRepository = $userRep;
     }
-
 
     /**
      * Return password hash
@@ -25,7 +23,7 @@ class UserService implements UserServiceInterface
     public function hashPassword($pass)
     {
         $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
-        return $encoder->encodePassword($pass, static::SALT);
+        return $encoder->encodePassword($pass, User::SALT);
     }
 
     /**
@@ -37,6 +35,9 @@ class UserService implements UserServiceInterface
     public function createUser($name, $rawPassword)
     {
         $hash = $this->hashPassword($rawPassword);
-        return new User($name, $rawPassword);
+        $user = new User();
+        $user->setPassword($hash)
+            ->setUsername($name);
+        return $user;
     }
 }

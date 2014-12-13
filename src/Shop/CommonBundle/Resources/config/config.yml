@@ -1,5 +1,6 @@
 parameters:
     shop.common.common_controller: Shop\CommonBundle\Controller\CommonController
+    shop.common.user_repository: Shop\CommonBundle\Entity\UserRepository
 
 services:
   shop.common.common_controller:
@@ -9,4 +10,8 @@ services:
         - [setTemplating, ["@templating"]]
 
   shop.common.user_repository:
-      class: CommonBundle\Entity\UserRepository
+      class: %shop.common.user_repository%
+      factory_service: doctrine.orm.entity_manager
+      factory_method:  getRepository
+      arguments:
+          - 'Shop\CommonBundle\Entity\User'

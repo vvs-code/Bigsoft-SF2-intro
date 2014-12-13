@@ -6,11 +6,27 @@ use Doctrine\Common\DataFixtures\Doctrine;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Shop\CommonBundle\Entity\User;
+use Shop\SecurityBundle\Service\UserServiceInterface;
 use Shop\CommonBundle\Entity\Role;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 
-class FixtureLoader implements FixtureInterface
+class FixtureLoader implements FixtureInterface, ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
      * Load data fixtures with the passed EntityManager
      *
@@ -18,6 +34,11 @@ class FixtureLoader implements FixtureInterface
      */
     function load(ObjectManager $manager)
     {
+        /**
+         * @var UserServiceInterface
+         */
+        $userService =  $this->container->get('shop.security.user_service');
+
         // создание пользователя
         $adminRole = new Role();
         $adminRole->setName('ROLE_ADMIN');
@@ -25,7 +46,7 @@ class FixtureLoader implements FixtureInterface
         $userRole = new Role();
         $userRole->setName('ROLE_USER');
         $manager->persist($userRole);
-        $user = new User('admin', 'admin');
+        $user = $userService->createUser('admin', 'admin');
         $user->getUserRoles()->add($userRole);
         $user->getUserRoles()->add($adminRole);
         $manager->persist($user);
@@ -33,7 +54,7 @@ class FixtureLoader implements FixtureInterface
         $userRole = new Role();
         $userRole->setName('ROLE_USER');
         $manager->persist($userRole);
-        $user = new User('user', 'user');
+        $user = $userService->createUser('user', 'user');
         $user->getUserRoles()->add($userRole);
         $manager->persist($user);
         $manager->flush();
