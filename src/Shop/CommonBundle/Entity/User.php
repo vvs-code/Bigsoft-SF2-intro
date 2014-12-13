@@ -81,7 +81,7 @@ class User implements UserInterface, \Serializable
      */
     public function serialize()
     {
-        return \json_encode(array($this->username, $this->password, $this->id));
+        return \json_encode([$this->username, $this->password, $this->id]);
     }
 
     /**
@@ -99,7 +99,7 @@ class User implements UserInterface, \Serializable
      * <code>
      * public function getRoles()
      * {
-     *     return array('ROLE_USER');
+     *     return ['ROLE_USER'];
      * }
      * </code>
      *

@@ -66,14 +66,13 @@ class Role implements RoleInterface, \Serializable
         $this->name = $name;
     }
 
-
     /**
      * Serializes the content of the current User object
      * @return string
      */
     public function serialize()
     {
-        return \json_encode(array($this->name, $this->id));
+        return \json_encode([$this->name, $this->id]);
     }
 
     /**
