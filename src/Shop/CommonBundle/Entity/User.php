@@ -26,7 +26,7 @@ class User implements UserInterface, \Serializable
      *
      * @var string $username
      */
-    private $username = "";
+    private $username;
     /**
      * @ORM\Column(name="password", type="string", length=255)
      *
@@ -43,19 +43,9 @@ class User implements UserInterface, \Serializable
      * @var ArrayCollection $userRoles
      */
     private $userRoles;
-
-    /**cls
-     *
-     */
-    public function __construct($name = null, $pass = null)
+    
+    public function __construct()
     {
-        if (!is_null($name)) {
-            $this->setUsername($name);
-        }
-        if (!is_null($pass)) {
-            $this->setRawPassword($pass);
-        }
-
         $this->userRoles = new ArrayCollection();
     }
 
