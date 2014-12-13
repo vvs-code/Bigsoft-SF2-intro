@@ -1,7 +1,6 @@
 <?php
 namespace Shop\SecurityBundle\Service;
 
-use Doctrine\ORM\EntityRepository;
 use Shop\CommonBundle\Entity\User;
 use Shop\CommonBundle\Entity\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
@@ -16,9 +15,7 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * Return password hash
-     * @param $pass
-     * @return mixed
+     * @inheritDoc
      */
     public function hashPassword($pass)
     {
@@ -27,10 +24,7 @@ class UserService implements UserServiceInterface
     }
 
     /**
-     * Create user by name and raw pass
-     * @param $name
-     * @param $rawPassword
-     * @return User|null
+     * @inheritDoc
      */
     public function createUser($name, $rawPassword)
     {
@@ -39,5 +33,43 @@ class UserService implements UserServiceInterface
         $user->setPassword($hash)
             ->setUsername($name);
         return $user;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteById($id)
+    {
+        $user = $this->userRepository->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('No guest found for id '.$id);
+        }
+
+        return $this->remove($user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function remove(User $user)
+    {
+        return $this->userRepository->remove($user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(User $user)
+    {
+        return $this->userRepository->save($user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
+        return $this->userRepository->findBy($criteria, $orderBy, $limit, $offset);
     }
 }
