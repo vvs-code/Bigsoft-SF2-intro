@@ -2,7 +2,9 @@
 
 namespace Shop\CommonBundle\Entity;
 
-interface UserRepositoryInterface
+use Doctrine\Common\Persistence\ObjectRepository;
+
+interface UserRepositoryInterface extends ObjectRepository
 {
 
 }
