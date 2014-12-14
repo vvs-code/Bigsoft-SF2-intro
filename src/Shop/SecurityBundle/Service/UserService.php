@@ -34,8 +34,8 @@ class UserService implements UserServiceInterface
      */
     public function createUser($name, $rawPassword)
     {
-        $hash = $this->hashPassword($rawPassword);
         $user = new User();
+        $hash = $this->hashPassword($rawPassword, $user);
         $user->setPassword($hash)
             ->setUsername($name);
         return $user;
