@@ -5,9 +5,9 @@ namespace Shop\CommonBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\Doctrine;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Shop\CommonBundle\Entity\User;
+use Shop\SecurityBundle\Entity\User;
 use Shop\SecurityBundle\Service\UserServiceInterface;
-use Shop\CommonBundle\Entity\Role;
+use Shop\SecurityBundle\Entity\Role;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

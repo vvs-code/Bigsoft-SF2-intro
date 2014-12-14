@@ -1,7 +1,7 @@
 <?php
 namespace Shop\SecurityBundle\Service;
 
-use Shop\CommonBundle\Entity\User;
+use Shop\SecurityBundle\Entity\User;
 
 interface UserServiceInterface
 {

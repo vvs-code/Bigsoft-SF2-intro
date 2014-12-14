@@ -1,5 +1,7 @@
 <?php
-namespace Shop\CommonBundle\Entity;
+namespace Shop\SecurityBundle\Entity;
+
+use Shop\CommonBundle\Entity\CommonRepository;
 
 class UserRepository extends CommonRepository implements UserRepositoryInterface
 {

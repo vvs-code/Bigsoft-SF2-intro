@@ -1,8 +1,8 @@
 <?php
 namespace Shop\SecurityBundle\Service;
 
-use Shop\CommonBundle\Entity\User;
-use Shop\CommonBundle\Entity\UserRepositoryInterface;
+use Shop\SecurityBundle\Entity\User;
+use Shop\SecurityBundle\Entity\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
