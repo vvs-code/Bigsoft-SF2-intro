@@ -10,7 +10,6 @@ use Shop\SecurityBundle\Entity\Role;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
 class FixtureLoader implements FixtureInterface, ContainerAwareInterface
 {
     /**
@@ -29,7 +28,7 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
     /**
      * Load data fixtures with the passed EntityManager
      *
-     * @param Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     function load(ObjectManager $manager)
     {
