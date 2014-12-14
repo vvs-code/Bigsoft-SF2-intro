@@ -49,7 +49,7 @@ class UserService implements UserServiceInterface
         $user = $this->userRepository->find($id);
 
         if (!$user) {
-            throw $this->createNotFoundException('No guest found for id '.$id);
+            throw new \Exception('No guest found for id '.$id);
         }
 
         return $this->remove($user);
@@ -60,7 +60,7 @@ class UserService implements UserServiceInterface
      */
     public function remove(User $user)
     {
-        return $this->userRepository->remove($user);
+        return $this->userRepository->remove($user)->flush();
     }
 
     /**
@@ -68,7 +68,7 @@ class UserService implements UserServiceInterface
      */
     public function save(User $user)
     {
-        return $this->userRepository->save($user);
+        return $this->userRepository->save($user)->flush();
     }
 
     /**

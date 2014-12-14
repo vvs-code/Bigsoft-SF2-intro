@@ -1,9 +1,7 @@
 <?php
 namespace Shop\CommonBundle\Entity;
 
-use Doctrine\ORM\EntityRepository;
-
-class UserRepository extends EntityRepository implements UserRepositoryInterface
+class UserRepository extends CommonRepository implements UserRepositoryInterface
 {
     /**
      * @inheritDoc
@@ -11,7 +9,7 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
     public function remove(User $user){
         $em = $this->getEntityManager();
         $em->remove($user);
-        $em->flush();
+        return $this;
     }
 
     /**
@@ -23,6 +21,6 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
     {
         $em = $this->getEntityManager();
         $em->persist($user);
-        return $em->flush();
+        return $this;
     }
 }
