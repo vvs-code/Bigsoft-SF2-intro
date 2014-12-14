@@ -8,23 +8,23 @@ interface UserServiceInterface
     /**
      * Return password hash
      * @param $pass
-     * @param User $user
+     * @param User $user, default = null
      * @return mixed
      */
     public function hashPassword($pass, User $user = null);
 
     /**
      * Create user by name and raw pass
-     * @param $name
-     * @param $rawPassword
+     * @param string $name
+     * @param string $rawPassword
      * @return User|null
      */
     public function createUser($name, $rawPassword);
 
     /**
      * Remove user by userId
-     * @param $id
-     * @return true|false|null
+     * @param int $id
+     * @return void
      */
     public function deleteById($id);
 
