@@ -66,8 +66,7 @@ class Role implements RoleInterface, \Serializable
     }
 
     /**
-     * Serializes the content of the current User object
-     * @return string
+     * @inheritDoc
      */
     public function serialize()
     {
@@ -75,8 +74,7 @@ class Role implements RoleInterface, \Serializable
     }
 
     /**
-     * Unserializes the given string in the current User object
-     * @param serialized
+     * @inheritDoc
      */
     public function unserialize($serialized)
     {

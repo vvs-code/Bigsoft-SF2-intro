@@ -49,8 +49,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Serializes the content of the current User object
-     * @return string
+     * @inheritDoc
      */
     public function serialize()
     {
@@ -58,8 +57,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Unserializes the given string in the current User object
-     * @param serialized
+     * @inheritDoc
      */
     public function unserialize($serialized)
     {
