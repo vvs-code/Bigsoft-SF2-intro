@@ -20,7 +20,7 @@ class UserService implements UserServiceInterface
     /**
      * @inheritDoc
      */
-    public function hashPassword($pass, $user = null)
+    public function hashPassword($pass, User $user = null)
     {
         if(is_null($user)){
             $user = new User();
@@ -52,7 +52,8 @@ class UserService implements UserServiceInterface
             throw new \Exception('No guest found for id '.$id);
         }
 
-        return $this->remove($user);
+        $this->remove($user);
+        return $this;
     }
 
     /**
@@ -60,7 +61,8 @@ class UserService implements UserServiceInterface
      */
     public function remove(User $user)
     {
-        return $this->userRepository->remove($user)->flush();
+        $this->userRepository->remove($user)->flush();
+        return $this;
     }
 
     /**
@@ -68,7 +70,8 @@ class UserService implements UserServiceInterface
      */
     public function save(User $user)
     {
-        return $this->userRepository->save($user)->flush();
+        $this->userRepository->save($user)->flush();
+        return $this;
     }
 
     /**
