@@ -7,7 +7,7 @@ interface UserServiceInterface
 {
     /**
      * Return password hash
-     * @param $pass
+     * @param string $pass
      * @param User $user, default = null
      * @return mixed
      */
