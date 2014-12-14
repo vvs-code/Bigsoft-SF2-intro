@@ -9,5 +9,5 @@ services:
       parent: shop.common.common_controller
   shop.security.user_service:
       class: %shop.security.user_service%
-      arguments: ["@shop.common.user_repository"]
+      arguments: ["@shop.common.user_repository", "@security.encoder_factory"]
 

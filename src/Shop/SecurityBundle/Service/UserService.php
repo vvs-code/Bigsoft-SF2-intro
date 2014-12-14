@@ -4,22 +4,28 @@ namespace Shop\SecurityBundle\Service;
 use Shop\CommonBundle\Entity\User;
 use Shop\CommonBundle\Entity\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserService implements UserServiceInterface
 {
     private $userRepository;
+    private $encodingFactory;
 
-    public function __construct(UserRepositoryInterface $userRep)
+    public function __construct(UserRepositoryInterface $userRep, EncoderFactoryInterface $encoderFactory)
     {
         $this->userRepository = $userRep;
+        $this->encodingFactory = $encoderFactory;
     }
 
     /**
      * @inheritDoc
      */
-    public function hashPassword($pass)
+    public function hashPassword($pass, $user = null)
     {
-        $encoder = new MessageDigestPasswordEncoder('sha512', true, 10);
+        if(is_null($user)){
+            $user = new User();
+        }
+        $encoder = $this->encodingFactory->getEncoder($user);
         return $encoder->encodePassword($pass, User::SALT);
     }
 
