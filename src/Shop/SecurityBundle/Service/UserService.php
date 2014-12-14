@@ -8,9 +8,19 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserService implements UserServiceInterface
 {
+    /**
+     * @var UserRepository
+     */
     private $userRepository;
+    /**
+     * @var EncoderFactoryInterface
+     */
     private $encodingFactory;
 
+    /**
+     * @param UserRepository $userRep
+     * @param EncoderFactoryInterface $encoderFactory
+     */
     public function __construct(UserRepository $userRep, EncoderFactoryInterface $encoderFactory)
     {
         $this->userRepository = $userRep;
