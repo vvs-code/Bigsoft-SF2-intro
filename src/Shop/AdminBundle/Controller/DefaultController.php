@@ -1,5 +1,4 @@
 <?php
-
 namespace Shop\AdminBundle\Controller;
 
 use Shop\CommonBundle\Controller;

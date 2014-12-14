@@ -1,5 +1,4 @@
 <?php
-
 namespace Shop\CommonBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\Doctrine;

@@ -1,5 +1,4 @@
 <?php
-
 namespace Shop\SecurityBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

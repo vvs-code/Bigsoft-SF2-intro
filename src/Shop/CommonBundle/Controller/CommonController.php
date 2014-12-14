@@ -1,5 +1,4 @@
 <?php
-
 namespace Shop\CommonBundle\Controller;
 
 use Symfony\Component\Templating\EngineInterface;
