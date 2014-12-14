@@ -8,7 +8,7 @@ interface CommonRepositoryInterface
 {
     /**
      * Flush Entity Manager
-     * @return mixed
+     * @return void
      */
     public function flush();
 }
