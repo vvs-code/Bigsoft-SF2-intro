@@ -44,7 +44,7 @@ class UserService implements UserServiceInterface
     /**
      * @inheritDoc
      */
-    public function deleteById($id)
+    public function removeById($id)
     {
         $user = $this->userRepository->find($id);
 

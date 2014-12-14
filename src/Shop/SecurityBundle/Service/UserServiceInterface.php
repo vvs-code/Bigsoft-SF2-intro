@@ -27,7 +27,7 @@ interface UserServiceInterface
      * @param int $id
      * @return void
      */
-    public function deleteById($id);
+    public function removeById($id);
 
     /**
      * Remove passed user
