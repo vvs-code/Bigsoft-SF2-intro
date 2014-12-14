@@ -3,7 +3,7 @@ namespace Shop\SecurityBundle\Entity;
 
 use Shop\CommonBundle\Entity\CommonRepository;
 
-class UserRepository extends CommonRepository implements UserRepositoryInterface
+class UserRepository extends CommonRepository
 {
     /**
      * @inheritDoc

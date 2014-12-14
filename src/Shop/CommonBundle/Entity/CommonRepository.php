@@ -10,6 +10,6 @@ abstract class CommonRepository  extends EntityRepository implements CommonRepos
      */
     public function flush()
     {
-        return $this->getEntityManager()->flush();
+        $this->getEntityManager()->flush();
     }
 } 
