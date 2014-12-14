@@ -48,7 +48,7 @@ class UserService implements UserServiceInterface
     {
         $user = $this->userRepository->find($id);
 
-        if (!$user) {
+        if (!($user instanceof User)) {
             throw new \Exception('No guest found for id '.$id);
         }
 
