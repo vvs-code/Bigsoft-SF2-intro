@@ -8,9 +8,10 @@ interface UserServiceInterface
     /**
      * Return password hash
      * @param $pass
+     * @param User $user
      * @return mixed
      */
-    public function hashPassword($pass);
+    public function hashPassword($pass, User $user = null);
 
     /**
      * Create user by name and raw pass
@@ -30,14 +31,14 @@ interface UserServiceInterface
     /**
      * Remove passed user
      * @param User $user
-     * @return mixed
+     * @return $this
      */
     public function remove(User $user);
 
     /**
      * Save passed user
      * @param User $user
-     * @return mixed
+     * @return $this
      */
     public function save(User $user);
 
