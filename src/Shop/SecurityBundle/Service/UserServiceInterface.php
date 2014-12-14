@@ -17,7 +17,8 @@ interface UserServiceInterface
      * Create user by name and raw pass
      * @param string $name
      * @param string $rawPassword
-     * @return User|null
+     * @return User
+     * @throws \Exception
      */
     public function createUser($name, $rawPassword);
 
