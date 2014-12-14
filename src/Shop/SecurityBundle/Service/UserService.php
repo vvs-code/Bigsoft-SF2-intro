@@ -2,7 +2,7 @@
 namespace Shop\SecurityBundle\Service;
 
 use Shop\CommonBundle\Entity\User;
-use Shop\CommonBundle\Entity\UserRepository;
+use Shop\CommonBundle\Entity\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
@@ -11,7 +11,7 @@ class UserService implements UserServiceInterface
     private $userRepository;
     private $encodingFactory;
 
-    public function __construct(UserRepository $userRep, EncoderFactoryInterface $encoderFactory)
+    public function __construct(UserRepositoryInterface $userRep, EncoderFactoryInterface $encoderFactory)
     {
         $this->userRepository = $userRep;
         $this->encodingFactory = $encoderFactory;
