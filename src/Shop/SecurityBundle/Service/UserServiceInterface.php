@@ -9,7 +9,7 @@ interface UserServiceInterface
      * Return password hash
      * @param string $pass
      * @param User $user, default = null
-     * @return mixed
+     * @return string
      */
     public function hashPassword($pass, User $user = null);
 
