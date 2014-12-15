@@ -32,14 +32,14 @@ interface UserServiceInterface
     /**
      * Remove passed user
      * @param User $user
-     * @return $this
+     * @return UserServiceInterface
      */
     public function remove(User $user);
 
     /**
      * Save passed user
      * @param User $user
-     * @return $this
+     * @return UserServiceInterface
      */
     public function save(User $user);
 

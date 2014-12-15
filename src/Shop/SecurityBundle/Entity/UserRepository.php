@@ -17,7 +17,7 @@ class UserRepository extends CommonRepository
     /**
      * Save user
      * @param User $user
-     * @return $this
+     * @return UserRepository
      */
     public function save(User $user)
     {
