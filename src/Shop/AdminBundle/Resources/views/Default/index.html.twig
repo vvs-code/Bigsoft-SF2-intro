@@ -3,5 +3,7 @@
 {% block title %}Admin page{% endblock %}
 {% block body %}
     <h1>{{ block('title') }}</h1>
-    <form action="{{ path('logout') }}"><button>Logout</button></form>
+    <form action="{{ path('logout') }}">
+        <button>Logout</button>
+    </form>
 {% endblock %}

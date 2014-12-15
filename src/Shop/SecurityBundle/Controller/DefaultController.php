@@ -28,7 +28,7 @@ class DefaultController extends Controller\CommonController
         return $this->render('ShopSecurityBundle:Default:login.html.twig', [
             // имя, введённое пользователем в последний раз
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error'         => $error,
+            'error' => $error,
         ]);
     }
 }

@@ -8,7 +8,8 @@ class UserRepository extends CommonRepository
     /**
      * @inheritDoc
      */
-    public function remove(User $user){
+    public function remove(User $user)
+    {
         $em = $this->getEntityManager();
         $em->remove($user);
         return $this;

@@ -35,7 +35,7 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
         /**
          * @var UserServiceInterface
          */
-        $userService =  $this->container->get('shop.security.user_service');
+        $userService = $this->container->get('shop.security.user_service');
 
         // создание пользователя
         $adminRole = new Role();

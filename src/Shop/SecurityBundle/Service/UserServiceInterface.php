@@ -8,7 +8,7 @@ interface UserServiceInterface
     /**
      * Return password hash
      * @param string $pass
-     * @param User $user, default = null
+     * @param User $user , default = null
      * @return string
      */
     public function hashPassword($pass, User $user = null);
@@ -46,10 +46,10 @@ interface UserServiceInterface
     /**
      * Finds users by a set of criteria.
      *
-     * @param array      $criteria
+     * @param array $criteria
      * @param array|null $orderBy
-     * @param int|null   $limit
-     * @param int|null   $offset
+     * @param int|null $limit
+     * @param int|null $offset
      *
      * @return User[]
      */

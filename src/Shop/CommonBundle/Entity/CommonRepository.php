@@ -3,7 +3,7 @@ namespace Shop\CommonBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
-abstract class CommonRepository  extends EntityRepository implements CommonRepositoryInterface
+abstract class CommonRepository extends EntityRepository implements CommonRepositoryInterface
 {
     /**
      * @inheritDoc

@@ -32,7 +32,7 @@ class UserService implements UserServiceInterface
      */
     public function hashPassword($pass, User $user = null)
     {
-        if(is_null($user)){
+        if (is_null($user)) {
             $user = new User();
         }
         $encoder = $this->encodingFactory->getEncoder($user);
@@ -59,7 +59,7 @@ class UserService implements UserServiceInterface
         $user = $this->userRepository->find($id);
 
         if (!($user instanceof User)) {
-            throw new \Exception('No guest found for id '.$id);
+            throw new \Exception('No guest found for id ' . $id);
         }
 
         $this->remove($user);
