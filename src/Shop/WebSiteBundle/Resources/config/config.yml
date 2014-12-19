@@ -1,7 +1,20 @@
 parameters:
     shop.website.index_controller: Shop\WebSiteBundle\Controller\IndexController
+    shop.website.product_service: Shop\WebSiteBundle\Service\ProductService
+    shop.website.product_repository: src\Shop\WebSiteBundle\Entity\ProductRepository
 
 services:
+  shop.website.product_repository:
+      class: %shop.website.product_repository%
+      factory_service: doctrine.orm.entity_manager
+      factory_method:  getRepository
+      arguments:
+          - 'Shop\WebSiteBundle\Entity\Product'
+  shop.website.product_service:
+      class: %shop.website.product_service%
+      arguments: ["@shop.website.product_repository"]
   shop.website.index_controller:
       class: %shop.website.index_controller%
       parent: shop.common.common_controller
+      calls:
+        - [setProductService, ["@shop.website.product_service"]]

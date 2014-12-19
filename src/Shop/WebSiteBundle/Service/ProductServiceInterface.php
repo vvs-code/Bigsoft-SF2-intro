@@ -1,5 +1,5 @@
 <?php
-namespace Shop\WebSiteBundle\Service\ProductService;
+namespace Shop\WebSiteBundle\Service;
 
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Entity\ProductRepository;
@@ -38,5 +38,13 @@ interface ProductServiceInterface
      * @return Product[]
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
+
+    /**
+     * Return product for page
+     * @param int $pageNum
+     * @param int $count
+     * @return Product[]
+     */
+    public function getPageItems($pageNum = 1, $count = 10);
 
 }
