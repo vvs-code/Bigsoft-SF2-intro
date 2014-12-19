@@ -10,12 +10,51 @@ use Doctrine\ORM\Mapping as ORM;
 Class Product implements \Serializable
 {
     /**
+     * @ORM\Id
+     * @ORM\Column(name="id", type="integer")`
+     * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var integer $id
+     */
+    private $id;
+    /**
+     * @ORM\Column(name="image", type="string", length=255)
+     *
+     * @var string $image
+     */
+    private $image;
+    /**
+     * @ORM\Column(name="title", type="string", length=255)
+     *
+     * @var string $title
+     */
+    private $title;
+    /**
+     * @ORM\Column(name="description", type="text")
+     *
+     * @var string $title
+     */
+    private $description;
+    /**
+     * @ORM\Column(name="price", type="integer")
+     *
+     * @var string $price
+     */
+    private $price;
+    /**
      * @return string
      */
     public function getCategories()
     {
         return $this->categories;
     }
+
+    /**
+     * @ORM\Column(name="categories", type="array")
+     *
+     * @var string $categories
+     */
+    private $categories = array();
 
     /**
      * @param string $categories
@@ -28,17 +67,17 @@ Class Product implements \Serializable
     /**
      * @return string
      */
-    public function getDecription()
+    public function getDescription()
     {
-        return $this->decription;
+        return $this->description;
     }
 
     /**
      * @param string $decription
      */
-    public function setDecription($decription)
+    public function setDescription($decription)
     {
-        $this->decription = $decription;
+        $this->description = $decription;
     }
 
     /**
@@ -106,45 +145,6 @@ Class Product implements \Serializable
     }
 
     /**
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer")`
-     * @ORM\GeneratedValue(strategy="AUTO")
-     *
-     * @var integer $id
-     */
-    private $id;
-    /**
-     * @ORM\Column(name="image", type="string", length=255)
-     *
-     * @var string $image
-     */
-    private $image;
-    /**
-     * @ORM\Column(name="title", type="string", length=255)
-     *
-     * @var string $title
-     */
-    private $title;
-    /**
-     * @ORM\Column(name="description", type="text")
-     *
-     * @var string $title
-     */
-    private $decription;
-    /**
-     * @ORM\Column(name="price", type="integer")
-     *
-     * @var string $price
-     */
-    private $price;
-    /**
-     * @ORM\Column(name="categories", type="array")
-     *
-     * @var string $categories
-     */
-    private $categories = array();
-
-    /**
      * @inheritDoc
      */
     public function serialize()
@@ -154,7 +154,7 @@ Class Product implements \Serializable
                 $this->image,
                 $this->title,
                 $this->price,
-                $this->decription,
+                $this->description,
                 json_encode($this->categories)
             ]);
     }

@@ -7,8 +7,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Shop\SecurityBundle\Entity\User;
 use Shop\SecurityBundle\Service\UserServiceInterface;
 use Shop\SecurityBundle\Entity\Role;
+use Shop\WebSiteBundle\Entity\Product;
+use Shop\WebSiteBundle\Service\ProductService;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+
 
 class FixtureLoader implements FixtureInterface, ContainerAwareInterface
 {
@@ -16,6 +19,11 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
      * @var ContainerInterface
      */
     private $container;
+
+    /**
+     * @var ObjectManager
+     */
+    private $manager;
 
     /**
      * {@inheritDoc}
@@ -32,6 +40,39 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
      */
     function load(ObjectManager $manager)
     {
+        $this->manager = $manager;
+
+        $this->loadUsers();
+        $this->loadProducts();
+
+    }
+
+    /**
+     * Load products fixtures
+     */
+    private function loadProducts() {
+        /**
+         * @var ProductService
+         */
+        $product_service = $this->container->get('shop.website.product_service');
+
+        // Load fake items from txt file
+        $fileName = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'base.txt';
+        $items = unserialize(trim(file_get_contents($fileName)));
+        foreach($items as $item){
+            $item['image'] = $item['img'];
+            $item['description'] = $item['decriptions'];
+            $item['price'] = isset($item['price'])? $item['price']: rand(0, 100);
+            $product = $product_service->createProduct($item);
+            $this->manager->persist($product);
+        }
+        $this->manager->flush();
+    }
+
+    /**
+     * Load users fixtures
+     */
+    private function loadUsers() {
         /**
          * @var UserServiceInterface
          */
@@ -40,21 +81,22 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
         // создание пользователя
         $adminRole = new Role();
         $adminRole->setName('ROLE_ADMIN');
-        $manager->persist($adminRole);
+        $this->manager->persist($adminRole);
         $userRole = new Role();
         $userRole->setName('ROLE_USER');
-        $manager->persist($userRole);
+        $this->manager->persist($userRole);
         $user = $userService->createUser('admin', 'admin');
         $user->getUserRoles()->add($userRole);
         $user->getUserRoles()->add($adminRole);
-        $manager->persist($user);
+        $this->manager->persist($user);
 
         $userRole = new Role();
         $userRole->setName('ROLE_USER');
-        $manager->persist($userRole);
+        $this->manager->persist($userRole);
         $user = $userService->createUser('user', 'user');
         $user->getUserRoles()->add($userRole);
-        $manager->persist($user);
-        $manager->flush();
+        $this->manager->persist($user);
+
+        $this->manager->flush();
     }
 }
