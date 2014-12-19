@@ -6,7 +6,9 @@ use Shop\CommonBundle\Entity\CommonRepository;
 class UserRepository extends CommonRepository
 {
     /**
-     * @inheritDoc
+     * Remove user
+     * @param User $user
+     * @return UserRepository
      */
     public function remove(User $user)
     {
