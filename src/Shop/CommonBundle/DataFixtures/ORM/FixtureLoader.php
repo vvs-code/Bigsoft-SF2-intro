@@ -11,6 +11,10 @@ use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Service\ProductService;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 class FixtureLoader implements FixtureInterface, ContainerAwareInterface
 {
@@ -23,6 +27,11 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
      * @var ObjectManager
      */
     private $manager;
+
+    /**
+     * @var Serializer
+     */
+    private $serializer;
 
     /**
      * {@inheritDoc}
@@ -41,6 +50,10 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
     {
         $this->manager = $manager;
 
+        $encoders = ['xml' => new XmlEncoder(), 'json' => new JsonEncoder()];
+        $normalizers = [new GetSetMethodNormalizer()];
+        $this->serializer = new Serializer($normalizers, $encoders);
+
         $this->loadUsers();
         $this->loadProducts();
     }
@@ -49,22 +62,15 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
      * Load products fixtures
      */
     private function loadProducts() {
-        /**
-         * @var ProductService
-         */
-        $productService = $this->container->get('shop.website.product_service');
-
         // Load fake items from txt file
-        $fileName = $this->container->getParameter('shop.common.fixtures_path').'base.txt';
-        $items = unserialize(trim(file_get_contents($fileName)));
-        foreach($items as $item){
-            $item['image'] = $item['img'];
-            $item['description'] = $item['decriptions'];
-            $item['price'] = isset($item['price'])? $item['price']: rand(0, 100);
-            $item['categories'] = rand(0, 1)? ['Category1']: ['Category1', 'Category2'];
-            $product = $productService->createProduct($item);
+        $fileName = $this->container->getParameter('shop.common.fixtures_path').'products.json';
+        $json = file_get_contents($fileName);
+        $products = $this->serializer->deserialize($json, 'Shop\WebSiteBundle\Entity\Product', 'json');
+
+        foreach($products as $product){
             $this->manager->persist($product);
         }
+
         $this->manager->flush();
     }
 
