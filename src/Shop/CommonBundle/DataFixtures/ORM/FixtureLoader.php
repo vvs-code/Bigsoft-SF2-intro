@@ -43,7 +43,6 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
 
         $this->loadUsers();
         $this->loadProducts();
-
     }
 
     /**
