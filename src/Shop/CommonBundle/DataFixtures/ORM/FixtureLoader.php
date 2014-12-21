@@ -12,7 +12,6 @@ use Shop\WebSiteBundle\Service\ProductService;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
 class FixtureLoader implements FixtureInterface, ContainerAwareInterface
 {
     /**
