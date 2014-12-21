@@ -55,5 +55,4 @@ interface ProductServiceInterface
      * @return PaginationInterface
      */
     public function getPagination($page = 1, $limit = 10, array $options = array());
-
 }
