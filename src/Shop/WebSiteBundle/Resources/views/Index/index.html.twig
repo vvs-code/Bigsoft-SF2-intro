@@ -2,12 +2,14 @@
 
 {% block title %}Main page{% endblock %}
 {% block body %}
-    <ul class="items">
-        {% for item in items %}
+    <ul class="pagination">
+        {% for item in pagination %}
             <li>{{ common.printItem(item) }}</li>
         {% else %}
             <li>No items</li>
         {% endfor %}
     </ul>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}
-

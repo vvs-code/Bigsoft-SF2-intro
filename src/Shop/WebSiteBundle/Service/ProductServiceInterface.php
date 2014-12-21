@@ -3,6 +3,7 @@ namespace Shop\WebSiteBundle\Service;
 
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Entity\ProductRepository;
+use \Knp\Component\Pager\Pagination\PaginationInterface;
 
 interface ProductServiceInterface
 {
@@ -46,5 +47,12 @@ interface ProductServiceInterface
      * @return Product[]
      */
     public function getPageItems($pageNum = 1, $count = 10);
+
+
+    /**
+     * Pass params to repository to get pagination
+     * @return PaginationInterface
+     */
+    public function getPagination();
 
 }

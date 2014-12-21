@@ -10,6 +10,8 @@ services:
       factory_method:  getRepository
       arguments:
           - 'Shop\WebSiteBundle\Entity\Product'
+      calls:
+        - [setPaginator, ["@knp_paginator"]]
   shop.website.product_service:
       class: %shop.website.product_service%
       arguments: ["@shop.website.product_repository"]

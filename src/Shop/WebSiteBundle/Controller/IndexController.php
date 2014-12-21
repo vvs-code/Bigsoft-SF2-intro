@@ -5,6 +5,7 @@ use Shop\CommonBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Service\ProductService;
+use Symfony\Component\HttpFoundation\Request;
 
 
 /**
@@ -20,11 +21,15 @@ class IndexController extends Controller\CommonController
     /**
      * @Route("/", name="main_page")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $page =  $request->query->get('page', 1);
+        $limit = 4;
+        $pagination = $this->productService->getPagination($page, $limit);
+
         $items = $this->productService->getPageItems(1, 3);
 
-        return $this->render('WebSiteBundle:Index:index.html.twig', ['items' => $items]);
+        return $this->render('WebSiteBundle:Index:index.html.twig', ['pagination' => $pagination]);
     }
 
     /**
