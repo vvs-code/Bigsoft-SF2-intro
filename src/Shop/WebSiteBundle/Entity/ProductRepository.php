@@ -2,7 +2,7 @@
 namespace Shop\WebSiteBundle\Entity;
 
 use Shop\CommonBundle\Entity\CommonRepository;
-use \Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\Paginator;
 
 class ProductRepository extends CommonRepository

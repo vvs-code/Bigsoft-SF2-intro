@@ -3,7 +3,7 @@ namespace Shop\WebSiteBundle\Service;
 
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Entity\ProductRepository;
-use \Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 
 interface ProductServiceInterface
 {
