@@ -22,12 +22,19 @@ class ProductService implements ProductServiceInterface
     /**
      * @inheritDoc
      */
-    public function createProduct(array $properties)
+    public function createProduct(array $properties = [])
     {
+        /**
+         * @var Product
+         */
         $product = new Product();
+        /**
+         * @var \ReflectionClass
+         */
+        $reflection = new \ReflectionClass($product);
         foreach ($properties as $name => $val) {
-            $setterName = 'set' . ucfirst($name);
-            if (method_exists($product, $setterName)) {
+            $setterName = 'set' . $name;
+            if($reflection->hasMethod($setterName)){
                 $product->$setterName($val);
             }
         }
