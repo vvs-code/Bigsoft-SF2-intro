@@ -42,19 +42,19 @@ Class Product implements \Serializable
      */
     private $price;
     /**
+     * @ORM\Column(name="categories", type="array")
+     *
+     * @var string $categories
+     */
+    private $categories = array();
+
+    /**
      * @return string
      */
     public function getCategories()
     {
         return $this->categories;
     }
-
-    /**
-     * @ORM\Column(name="categories", type="array")
-     *
-     * @var string $categories
-     */
-    private $categories = array();
 
     /**
      * @param string $categories
@@ -150,13 +150,13 @@ Class Product implements \Serializable
     public function serialize()
     {
         return \json_encode([
-                $this->id,
-                $this->image,
-                $this->title,
-                $this->price,
-                $this->description,
-                json_encode($this->categories)
-            ]);
+            $this->id,
+            $this->image,
+            $this->title,
+            $this->price,
+            $this->description,
+            json_encode($this->categories)
+        ]);
     }
 
     /**

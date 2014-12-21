@@ -3,7 +3,6 @@ namespace Shop\WebSiteBundle\Service;
 
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Entity\ProductRepository;
-use \Knp\Component\Pager\Pagination\PaginationInterface;
 
 class ProductService implements ProductServiceInterface
 {
@@ -15,7 +14,8 @@ class ProductService implements ProductServiceInterface
     /**
      * @param ProductRepository $productRepository
      */
-    public function __construct(ProductRepository $productRepository){
+    public function __construct(ProductRepository $productRepository)
+    {
         $this->productRepository = $productRepository;
     }
 
@@ -27,9 +27,9 @@ class ProductService implements ProductServiceInterface
     public function createProduct(array $properties)
     {
         $product = new Product();
-        foreach($properties as $name => $val) {
-            $setterName = 'set'.ucfirst($name);
-            if(method_exists($product, $setterName)){
+        foreach ($properties as $name => $val) {
+            $setterName = 'set' . ucfirst($name);
+            if (method_exists($product, $setterName)) {
                 $product->$setterName($val);
             }
         }
@@ -59,6 +59,17 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
+     * Return product for page
+     * @param int $pageNum
+     * @param int $count
+     * @return Product[]
+     */
+    public function getPageItems($pageNum = 1, $count = 10)
+    {
+        return $this->findBy(array(), null, $count, $pageNum * $count);
+    }
+
+    /**
      * Finds products by a set of criteria.
      *
      * @param array $criteria
@@ -74,24 +85,10 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * Return product for page
-     * @param int $pageNum
-     * @param int $count
-     * @return Product[]
+     * @inheritDoc
      */
-    public function getPageItems($pageNum = 1, $count = 10)
+    public function getPagination($page = 1, $limit = 10, array $options = array())
     {
-        return $this->findBy(array(), null, $count, $pageNum*$count);
-    }
-
-    /**
-     * Pass paramgs to repository getPagination method
-     * @param mixed $params
-     * @return PaginationInterface
-     */
-    public function getPagination($params = array())
-    {
-        $arr = func_get_args();
-        return call_user_func_array(array(&$this->productRepository,'getPagination'), $arr);
+        return $this->productRepository->getPagination($page, $limit, $options);
     }
 }

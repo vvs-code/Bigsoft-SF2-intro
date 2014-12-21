@@ -48,11 +48,12 @@ interface ProductServiceInterface
      */
     public function getPageItems($pageNum = 1, $count = 10);
 
-
     /**
-     * Pass params to repository to get pagination
+     * @param int $page
+     * @param int $limit
+     * @param array $options
      * @return PaginationInterface
      */
-    public function getPagination();
+    public function getPagination($page = 1, $limit = 10, array $options = array());
 
 }

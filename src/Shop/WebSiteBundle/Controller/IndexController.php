@@ -23,7 +23,7 @@ class IndexController extends Controller\CommonController
      */
     public function indexAction(Request $request)
     {
-        $page =  $request->query->get('page', 1);
+        $page = $request->query->get('page', 1);
         $limit = 4;
         $pagination = $this->productService->getPagination($page, $limit);
 
@@ -40,7 +40,8 @@ class IndexController extends Controller\CommonController
         return $this->render('WebSiteBundle:Index:cart.html.twig');
     }
 
-    public function setProductService(ProductService $productService){
+    public function setProductService(ProductService $productService)
+    {
         $this->productService = $productService;
     }
 
