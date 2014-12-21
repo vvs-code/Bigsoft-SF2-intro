@@ -63,6 +63,7 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
             $item['image'] = $item['img'];
             $item['description'] = $item['decriptions'];
             $item['price'] = isset($item['price'])? $item['price']: rand(0, 100);
+            $item['categories'] = rand(0, 1)? ['Category1']: ['Category1', 'Category2'];
             $product = $product_service->createProduct($item);
             $this->manager->persist($product);
         }
