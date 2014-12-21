@@ -62,12 +62,18 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
      * Load products fixtures
      */
     private function loadProducts() {
+        /**
+         * @var ProductService
+         */
+        $productService = $this->container->get('shop.website.product_service');
+
         // Load fake items from txt file
         $fileName = $this->container->getParameter('shop.common.fixtures_path').'products.json';
         $json = file_get_contents($fileName);
-        $products = $this->serializer->deserialize($json, 'Shop\WebSiteBundle\Entity\Product', 'json');
+        $arr = json_decode($json, true);
 
-        foreach($products as $product){
+        foreach($arr as $item){
+            $product = $productService->createProduct($item);
             $this->manager->persist($product);
         }
 
