@@ -66,7 +66,7 @@ class ProductService implements ProductServiceInterface
      */
     public function getPageItems($pageNum = 1, $count = 10)
     {
-        return $this->findBy(array(), null, $count, $pageNum * $count);
+        return $this->findBy([], null, $count, $pageNum * $count);
     }
 
     /**
@@ -79,7 +79,7 @@ class ProductService implements ProductServiceInterface
      *
      * @return Product[]
      */
-    public function findBy(array $criteria = array(), array $orderBy = null, $limit = null, $offset = null)
+    public function findBy(array $criteria = [], array $orderBy = null, $limit = null, $offset = null)
     {
         return $this->productRepository->findBy($criteria, $orderBy, $limit, $offset);
     }
@@ -87,7 +87,7 @@ class ProductService implements ProductServiceInterface
     /**
      * @inheritDoc
      */
-    public function getPagination($page = 1, $limit = 10, array $options = array())
+    public function getPagination($page = 1, $limit = 10, array $options =[])
     {
         return $this->productRepository->getPagination($page, $limit, $options);
     }

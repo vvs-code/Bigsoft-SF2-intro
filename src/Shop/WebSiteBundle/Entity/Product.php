@@ -46,7 +46,7 @@ Class Product implements \Serializable
      *
      * @var string $categories
      */
-    private $categories = array();
+    private $categories = [];
 
     /**
      * @return string

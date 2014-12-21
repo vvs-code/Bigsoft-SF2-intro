@@ -25,7 +25,7 @@ class ProductRepository extends CommonRepository
      * Return paganation for passed params
      * @return PaginationInterface
      */
-    public function getPagination($page = 1, $limit = 10, array $options = array())
+    public function getPagination($page = 1, $limit = 10, array $options = [])
     {
         $query = $this->getEntityManager()->createQuery("SELECT p FROM WebSiteBundle:Product p");
         return $this->paginator->paginate($query, $page, $limit, $options);
