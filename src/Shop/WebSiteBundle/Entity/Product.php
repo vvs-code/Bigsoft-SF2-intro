@@ -41,28 +41,6 @@ Class Product implements \Serializable
      * @var string $price
      */
     private $price;
-    /**
-     * @ORM\Column(name="categories", type="array")
-     *
-     * @var string $categories
-     */
-    private $categories = [];
-
-    /**
-     * @return string
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
-
-    /**
-     * @param string $categories
-     */
-    public function setCategories($categories)
-    {
-        $this->categories = $categories;
-    }
 
     /**
      * @return string
