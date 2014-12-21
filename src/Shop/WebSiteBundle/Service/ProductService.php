@@ -20,9 +20,7 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * Create product
-     * @param array $properties
-     * @return Product
+     * @inheritDoc
      */
     public function createProduct(array $properties)
     {
@@ -37,9 +35,7 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * Remove product
-     * @param Product $product
-     * @return ProductServiceInterface
+     * @inheritDoc
      */
     public function remove(Product $product)
     {
@@ -48,9 +44,7 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * Save product
-     * @param Product $product
-     * @return ProductServiceInterface
+     * @inheritDoc
      */
     public function save(Product $product)
     {
@@ -59,10 +53,7 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * Return product for page
-     * @param int $pageNum
-     * @param int $count
-     * @return Product[]
+     * @inheritDoc
      */
     public function getPageItems($pageNum = 1, $count = 10)
     {
@@ -70,14 +61,7 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
-     * Finds products by a set of criteria.
-     *
-     * @param array $criteria
-     * @param array|null $orderBy
-     * @param int|null $limit
-     * @param int|null $offset
-     *
-     * @return Product[]
+     * @inheritDoc
      */
     public function findBy(array $criteria = [], array $orderBy = null, $limit = null, $offset = null)
     {
