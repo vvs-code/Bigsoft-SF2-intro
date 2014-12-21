@@ -53,7 +53,7 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
         /**
          * @var ProductService
          */
-        $product_service = $this->container->get('shop.website.product_service');
+        $productService = $this->container->get('shop.website.product_service');
 
         // Load fake items from txt file
         $fileName = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'base.txt';
@@ -63,7 +63,7 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
             $item['description'] = $item['decriptions'];
             $item['price'] = isset($item['price'])? $item['price']: rand(0, 100);
             $item['categories'] = rand(0, 1)? ['Category1']: ['Category1', 'Category2'];
-            $product = $product_service->createProduct($item);
+            $product = $productService->createProduct($item);
             $this->manager->persist($product);
         }
         $this->manager->flush();
