@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends Controller\CommonController
 {
+    const QUERY_PAGE_KEY = 'page';
     /**
      * @var ProductService
      */
@@ -23,7 +24,7 @@ class IndexController extends Controller\CommonController
      */
     public function indexAction(Request $request)
     {
-        $page = $request->query->get('page', 1);
+        $page = $request->query->get(static::QUERY_PAGE_KEY, 1);
         $pagination = $this->productService->getPagination($page);
 
         return $this->render('WebSiteBundle:Index:index.html.twig', ['pagination' => $pagination]);
