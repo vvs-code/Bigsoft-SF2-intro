@@ -24,8 +24,7 @@ class IndexController extends Controller\CommonController
     public function indexAction(Request $request)
     {
         $page = $request->query->get('page', 1);
-        $limit = 4;
-        $pagination = $this->productService->getPagination($page, $limit);
+        $pagination = $this->productService->getPagination($page);
 
         $items = $this->productService->getPageItems(1, 3);
 
