@@ -55,7 +55,7 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
         $productService = $this->container->get('shop.website.product_service');
 
         // Load fake items from txt file
-        $fileName = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Resources' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'base.txt';
+        $fileName = $this->container->getParameter('shop.common.fixtures_path').'base.txt';
         $items = unserialize(trim(file_get_contents($fileName)));
         foreach($items as $item){
             $item['image'] = $item['img'];

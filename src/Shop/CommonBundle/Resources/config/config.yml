@@ -1,5 +1,6 @@
 parameters:
     shop.common.common_controller: Shop\CommonBundle\Controller\CommonController
+    shop.common.fixtures_path: %kernel.root_dir%/../src/Shop/CommonBundle/Resources/data/
 
 services:
   shop.common.common_controller:
