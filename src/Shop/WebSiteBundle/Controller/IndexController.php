@@ -26,8 +26,6 @@ class IndexController extends Controller\CommonController
         $page = $request->query->get('page', 1);
         $pagination = $this->productService->getPagination($page);
 
-        $items = $this->productService->getPageItems(1, 3);
-
         return $this->render('WebSiteBundle:Index:index.html.twig', ['pagination' => $pagination]);
     }
 
