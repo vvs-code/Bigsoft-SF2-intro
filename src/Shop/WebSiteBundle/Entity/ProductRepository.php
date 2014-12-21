@@ -7,7 +7,6 @@ use Knp\Component\Pager\Paginator;
 
 class ProductRepository extends CommonRepository
 {
-
     /**
      * @var Paginator KnpPaginator
      */
