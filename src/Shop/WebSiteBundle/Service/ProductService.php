@@ -29,14 +29,14 @@ class ProductService implements ProductServiceInterface
          */
         $product = new Product();
 
-        if(!empty($properties)) {
+        if (!empty($properties)) {
             /**
              * @var \ReflectionClass
              */
             $reflection = new \ReflectionClass($product);
             foreach ($properties as $name => $val) {
                 $setterName = 'set' . $name;
-                if($reflection->hasMethod($setterName)){
+                if ($reflection->hasMethod($setterName)) {
                     $product->$setterName($val);
                 }
             }
@@ -82,7 +82,7 @@ class ProductService implements ProductServiceInterface
     /**
      * @inheritDoc
      */
-    public function getPagination($page = 1, $limit = 10, array $options =[])
+    public function getPagination($page = 1, $limit = 10, array $options = [])
     {
         return $this->productRepository->getPagination($page, $limit, $options);
     }
