@@ -3,6 +3,7 @@ namespace Shop\WebSiteBundle\Service;
 
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Entity\ProductRepository;
+use Knp\Component\Pager\Paginator;
 
 class ProductService implements ProductServiceInterface
 {
@@ -82,8 +83,8 @@ class ProductService implements ProductServiceInterface
     /**
      * @inheritDoc
      */
-    public function getPagination($page = 1, $limit = 10, array $options = [])
+    public function getPagination(Paginator $paginator, $page = 1, $limit = 10, array $options = [])
     {
-        return $this->productRepository->getPagination($page, $limit, $options);
+        return $this->productRepository->getPagination($paginator, $page, $limit, $options);
     }
 }

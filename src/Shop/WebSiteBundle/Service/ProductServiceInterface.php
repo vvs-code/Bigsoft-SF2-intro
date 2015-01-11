@@ -4,6 +4,7 @@ namespace Shop\WebSiteBundle\Service;
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Entity\ProductRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\Paginator;
 
 interface ProductServiceInterface
 {
@@ -54,5 +55,5 @@ interface ProductServiceInterface
      * @param array $options
      * @return PaginationInterface
      */
-    public function getPagination($page = 1, $limit = 10, array $options = []);
+    public function getPagination(Paginator $pageinator, $page = 1, $limit = 10, array $options = []);
 }

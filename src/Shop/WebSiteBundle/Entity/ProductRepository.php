@@ -8,26 +8,17 @@ use Knp\Component\Pager\Paginator;
 class ProductRepository extends CommonRepository
 {
     /**
-     * @var Paginator KnpPaginator
-     */
-    protected $paginator;
-
-    /**
-     * @param Paginator $paginator
-     */
-    public function setPaginator(Paginator $paginator)
-    {
-        $this->paginator = $paginator;
-    }
-
-    /**
      * Return paganation for passed params
+     * @param Paginator $paginator
+     * @param int $page
+     * @param int $limit
+     * @param array $options
      * @return PaginationInterface
      */
-    public function getPagination($page = 1, $limit = 10, array $options = [])
+    public function getPagination(Paginator $paginator, $page = 1, $limit = 10, array $options = [])
     {
         $query = $this->getEntityManager()->createQuery("SELECT p FROM WebSiteBundle:Product p");
-        return $this->paginator->paginate($query, $page, $limit, $options);
+        return $paginator->paginate($query, $page, $limit, $options);
     }
 
     /**
