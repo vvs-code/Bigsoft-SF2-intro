@@ -28,16 +28,20 @@ class ProductService implements ProductServiceInterface
          * @var Product
          */
         $product = new Product();
-        /**
-         * @var \ReflectionClass
-         */
-        $reflection = new \ReflectionClass($product);
-        foreach ($properties as $name => $val) {
-            $setterName = 'set' . $name;
-            if($reflection->hasMethod($setterName)){
-                $product->$setterName($val);
+
+        if(!empty($properties)) {
+            /**
+             * @var \ReflectionClass
+             */
+            $reflection = new \ReflectionClass($product);
+            foreach ($properties as $name => $val) {
+                $setterName = 'set' . $name;
+                if($reflection->hasMethod($setterName)){
+                    $product->$setterName($val);
+                }
             }
         }
+
         return $product;
     }
 
