@@ -12,7 +12,7 @@ interface ProductServiceInterface
      * @param array $properties
      * @return Product
      */
-    public function createProduct(array $properties);
+    public function createProduct(array $properties = []);
 
     /**
      * Remove product
