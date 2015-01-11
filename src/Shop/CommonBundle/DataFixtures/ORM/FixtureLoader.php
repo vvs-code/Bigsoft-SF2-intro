@@ -11,10 +11,6 @@ use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Service\ProductService;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 class FixtureLoader implements FixtureInterface, ContainerAwareInterface
 {
@@ -27,11 +23,6 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
      * @var ObjectManager
      */
     private $manager;
-
-    /**
-     * @var Serializer
-     */
-    private $serializer;
 
     /**
      * {@inheritDoc}
@@ -49,11 +40,6 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
     function load(ObjectManager $manager)
     {
         $this->manager = $manager;
-
-        $encoders = ['xml' => new XmlEncoder(), 'json' => new JsonEncoder()];
-        $normalizers = [new GetSetMethodNormalizer()];
-        $this->serializer = new Serializer($normalizers, $encoders);
-
         $this->loadUsers();
         $this->loadProducts();
     }
@@ -68,7 +54,7 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
         $productService = $this->container->get('shop.website.product_service');
 
         // Load fake items from txt file
-        $fileName = $this->container->getParameter('shop.common.fixtures_path').'products.json';
+        $fileName = sprintf('%sproducts.json',$this->container->getParameter('shop.common.fixtures_path'));
         $json = file_get_contents($fileName);
         $arr = json_decode($json, true);
 
@@ -96,6 +82,8 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
         $userRole = new Role();
         $userRole->setName('ROLE_USER');
         $this->manager->persist($userRole);
+
+        /** @var $user User  */
         $user = $userService->createUser('admin', 'admin');
         $user->getUserRoles()->add($userRole);
         $user->getUserRoles()->add($adminRole);
@@ -104,6 +92,8 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
         $userRole = new Role();
         $userRole->setName('ROLE_USER');
         $this->manager->persist($userRole);
+
+        /** @var $user User  */
         $user = $userService->createUser('user', 'user');
         $user->getUserRoles()->add($userRole);
         $this->manager->persist($user);
