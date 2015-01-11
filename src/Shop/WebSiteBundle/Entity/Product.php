@@ -132,8 +132,7 @@ Class Product implements \Serializable
             $this->image,
             $this->title,
             $this->price,
-            $this->description,
-            json_encode($this->categories)
+            $this->description
         ]);
     }
 
@@ -146,6 +145,5 @@ Class Product implements \Serializable
         foreach ($arr as $key => $val) {
             $this->$key = $val;
         }
-        $this->categories = \json_decode($this->categories);
     }
 }
