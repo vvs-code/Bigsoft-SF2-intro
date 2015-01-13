@@ -43,6 +43,9 @@ class IndexController extends Controller\CommonController
         return $this->render('WebSiteBundle:Index:cart.html.twig');
     }
 
+    /**
+     * @param ProductService $productService
+     */
     public function setProductService(ProductService $productService)
     {
         $this->productService = $productService;

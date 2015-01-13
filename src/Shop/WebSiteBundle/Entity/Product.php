@@ -38,7 +38,7 @@ Class Product implements \Serializable
     /**
      * @ORM\Column(name="price", type="integer")
      *
-     * @var string $price
+     * @var integer $price
      */
     private $price;
 
@@ -91,7 +91,7 @@ Class Product implements \Serializable
     }
 
     /**
-     * @return string
+     * @return integer
      */
     public function getPrice()
     {
@@ -99,7 +99,7 @@ Class Product implements \Serializable
     }
 
     /**
-     * @param string $price
+     * @param integer $price
      */
     public function setPrice($price)
     {
