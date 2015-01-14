@@ -1,12 +1,12 @@
 <?php
 namespace Shop\WebSiteBundle\Controller;
 
-use Shop\CommonBundle\Controller;
+use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Shop\CommonBundle\Controller;
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Service\ProductService;
 use Symfony\Component\HttpFoundation\Request;
-use Knp\Component\Pager\Paginator;
 
 /**
  * @Route(service="shop.website.index_controller")
