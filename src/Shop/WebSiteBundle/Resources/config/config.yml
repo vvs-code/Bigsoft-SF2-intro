@@ -19,3 +19,4 @@ services:
       calls:
         - [setProductService, ["@shop.website.product_service"]]
         - [setPaginator, ["@knp_paginator"]]
+        - [setPageQueryKey, ["%page_query_key%"]]

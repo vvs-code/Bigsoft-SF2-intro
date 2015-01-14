@@ -13,7 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends Controller\CommonController
 {
-    const QUERY_PAGE_KEY = 'page';
+    /**
+     * @var string
+     */
+    private $pageQueryKey;
+
     /**
      * @var ProductService
      */
@@ -29,7 +33,7 @@ class IndexController extends Controller\CommonController
      */
     public function indexAction(Request $request)
     {
-        $page = $request->query->get(static::QUERY_PAGE_KEY, 1);
+        $page = $request->query->get($this->pageQueryKey, 1);
         $pagination = $this->productService->getPagination($this->paginator, $page);
 
         return $this->render('WebSiteBundle:Index:index.html.twig', ['pagination' => $pagination]);
@@ -57,6 +61,14 @@ class IndexController extends Controller\CommonController
     public function setPaginator(Paginator $paginator)
     {
         $this->paginator = $paginator;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function setPageQueryKey($key)
+    {
+        $this->pageQueryKey = $key;
     }
 
 }
