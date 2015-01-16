@@ -2,6 +2,7 @@
 namespace Shop\WebSiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="Shop\WebSiteBundle\Entity\ProductRepository")
@@ -19,28 +20,39 @@ Class Product implements \Serializable
     private $id;
     /**
      * @ORM\Column(name="image", type="string", length=255)
+     * @Assert\NotBlank(message="Product should contains picture")
      *
      * @var string $image
      */
     private $image;
     /**
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank(message="Product should contains title")
      *
      * @var string $title
      */
     private $title;
     /**
      * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank(message="Product should contains description")
      *
-     * @var string $title
+     * @var string $description
      */
     private $description;
     /**
      * @ORM\Column(name="price", type="integer")
+     * @Assert\NotBlank(message="Product should contains price")
      *
      * @var integer $price
      */
     private $price;
+
+    /**
+     *  @Assert\Image()
+     *
+     * @var
+     */
+    private $file;
 
     /**
      * @return string
@@ -145,5 +157,13 @@ Class Product implements \Serializable
         foreach ($arr as $key => $val) {
             $this->$key = $val;
         }
+    }
+
+    public function getFile() {
+        return $this->file;
+    }
+
+    public function setFile($file) {
+        $this->file = $file;
     }
 }
