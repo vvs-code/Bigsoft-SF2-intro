@@ -1,6 +1,7 @@
 <?php
 namespace Shop\CommonBundle\Controller;
 
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,6 +17,11 @@ class CommonController
     protected $templating;
 
     /**
+     * @var FormFactory
+     */
+    protected $formFactory;
+
+    /**
      * Set templating engine
      * @param TwigEngine $templating
      * @return CommonController this
@@ -23,6 +29,10 @@ class CommonController
     public function setTemplating(EngineInterface $templating)
     {
         $this->templating = $templating;
+    }
+
+    public function setFormFactory(FormFactory $ff){
+        $this->formFactory = $ff;
     }
 
     /**
