@@ -17,7 +17,10 @@ class ProductType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('file', 'file', ['required' => false])
+            ->add('file', 'file', [
+                'required' => false,
+                'attr' => ['accept' => "image/*"]
+            ])
             ->add('image', 'hidden')
             ->add('price', 'number')
         ;
