@@ -40,7 +40,7 @@
     </div>
 {% endmacro %}
 
-{% macro printItem(item) %}
-    <img src="{{ item.image }}" align="left"/><strong>{{ item.title }}</strong><button>Buy</button>
-    <p>{{ item.description|raw }}</p>
+{% macro printProduct(product) %}
+    <img src="{{ product.image }}" align="left"/><strong>{{ product.title }}</strong><button>Buy</button>
+    <p>{{ product.description|raw }}</p>
 {% endmacro %}
