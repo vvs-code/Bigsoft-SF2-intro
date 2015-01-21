@@ -3,8 +3,8 @@
 {% block title %}Main page{% endblock %}
 {% block body %}
     <ul class="pagination">
-        {% for item in pagination %}
-            <li>{{ common.printItem(item) }}</li>
+        {% for product in pagination %}
+            <li>{{ common.printProduct(product) }}</li>
         {% else %}
             <li>No items</li>
         {% endfor %}
