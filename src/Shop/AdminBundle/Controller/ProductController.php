@@ -5,37 +5,28 @@ namespace Shop\AdminBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Shop\WebSiteBundle\Entity\Product;
 use Shop\AdminBundle\Form\ProductType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Shop\CommonBundle\Controller\CommonController;
+use Shop\WebSiteBundle\Entity\Product;
+use Shop\WebSiteBundle\Service\ProductService;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Product controller.
+ * Class ProductController
+ * @package Shop\AdminBundle\Controller
+ * @Route("/product", service="shop.admin.product_controller")
  *
- * @Route("/product")
  */
 class ProductController extends CommonController
 {
-
     /**
-     * Lists all Product entities.
-     *
-     * @Route("/", name="admin_product")
-     * @Method("GET")
-     * @Template()
+     * @var ProductService
      */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
+    private $productService;
 
-        $entities = $em->getRepository('WebSiteBundle:Product')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
-    }
     /**
      * Creates a new Product entity.
      *
@@ -46,40 +37,19 @@ class ProductController extends CommonController
     public function createAction(Request $request)
     {
         $entity = new Product();
-        $form = $this->createCreateForm($entity);
+        $form = $this->createProductForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $this->productService->save($entity);
 
             return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
-    }
-
-    /**
-     * Creates a form to create a Product entity.
-     *
-     * @param Product $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Product $entity)
-    {
-        $form = $this->createForm(new ProductType(), $entity, array(
-            'action' => $this->generateUrl('admin_product_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
     }
 
     /**
@@ -92,35 +62,31 @@ class ProductController extends CommonController
     public function newAction()
     {
         $entity = new Product();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createProductForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
     /**
      * Finds and displays a Product entity.
      *
-     * @Route("/{id}", name="admin_product_show")
+     * @Route("/{id}", name="admin_product_show", requirements={
+     *     "id": "\d+"
+     * })
      * @Method("GET")
      * @Template()
      */
     public function showAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('WebSiteBundle:Product')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product entity.');
-        }
+        $entity = $this->getProductById($id);
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -128,85 +94,61 @@ class ProductController extends CommonController
     /**
      * Displays a form to edit an existing Product entity.
      *
-     * @Route("/{id}/edit", name="admin_product_edit")
+     * @Route("/{id}/edit", name="admin_product_edit", requirements={
+     *     "id": "\d+"
+     * })
      * @Method("GET")
      * @Template()
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $entity = $this->getProductById($id);
 
-        $entity = $em->getRepository('WebSiteBundle:Product')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createProductForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
-    /**
-    * Creates a form to edit a Product entity.
-    *
-    * @param Product $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Product $entity)
-    {
-        $form = $this->createForm(new ProductType(), $entity, array(
-            'action' => $this->generateUrl('admin_product_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
     /**
      * Edits an existing Product entity.
      *
-     * @Route("/{id}", name="admin_product_update")
+     * @Route("/{id}", name="admin_product_update", requirements={
+     *     "id": "\d+"
+     * })
      * @Method("PUT")
      * @Template("AdminBundle:Product:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('WebSiteBundle:Product')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Product entity.');
-        }
+        $entity = $this->getProductById($id);
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createProductForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
-
             return $this->redirect($this->generateUrl('admin_product_edit', array('id' => $id)));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Product entity.
      *
-     * @Route("/{id}", name="admin_product_delete")
+     * @Route("/{id}", name="admin_product_delete", requirements={
+     *     "id": "\d+"
+     * })
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,12 +157,7 @@ class ProductController extends CommonController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('WebSiteBundle:Product')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Product entity.');
-            }
+            $entity = $this->getProductById($id);
 
             $em->remove($entity);
             $em->flush();
@@ -242,7 +179,80 @@ class ProductController extends CommonController
             ->setAction($this->generateUrl('admin_product_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
+            ->getForm();
+    }
+
+    /**
+     * @param ProductService $productService
+     */
+    public function setProductService(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
+
+    public function createProductForm(Product $entity)
+    {
+        $entityId = $entity->getId();
+
+        if ($entityId) {
+            $submitLabel = "Update";
+            $submitMethod = "PUT";
+            $submitAction = $this->generateUrl('admin_product_update', array('id' => $entity->getId()));
+        } else {
+            $submitLabel = "Create";
+            $submitMethod = "POST";
+            $submitAction = $this->generateUrl('admin_product_create');
+        }
+
+        $form = $this->createFormBuilder(new ProductType(), $entity, array(
+            'action' => $submitAction,
+            'method' => $submitMethod
+        ))
+            ->addEventListener(FormEvents::SUBMIT, function($event) {
+                $this->onFormSubmit($event);
+            }, 900)
             ->getForm()
-        ;
+            ->add('submit', 'submit', array('label' => $submitLabel));
+
+        return $form;
+    }
+
+    protected function onFormSubmit($event)
+    {
+        /**
+         * @var Product
+         */
+        $product = $event->getData();
+        $form = $event->getForm();
+
+        /**
+         * @var UploadedFile
+         */
+        $file = $product->getFile();
+        if($file instanceof UploadedFile) {
+            $dirName = sprintf('images/', time());
+            $fileName = sprintf('%d_%s', time(), $file->getFilename());
+            $file->move('$fileName', $fileName);
+            $product->setImage($dirName.$fileName);
+        }
+
+        var_dump($product);
+        //var_dump($event);
+    }
+
+    /**
+     * @param $id
+     * @return Product|null
+     * @throws \Symfony\Component\Security\Acl\Exception\Exception
+     * @throws void
+     */
+    protected function getProductById($id) {
+        $entity = $this->productService->findById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException(sprintf('Unable to find Product entity #%s', $id));
+        }
+
+        return $entity;
     }
 }

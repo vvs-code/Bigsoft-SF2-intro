@@ -1,7 +1,14 @@
 parameters:
     shop.admin.default_controller: Shop\AdminBundle\Controller\DefaultController
+    shop.admin.product_controller: Shop\AdminBundle\Controller\ProductController
 
 services:
   shop.admin.default_controller:
       class: %shop.admin.default_controller%
       parent: shop.common.common_controller
+
+  shop.admin.product_controller:
+      class: %shop.admin.product_controller%
+      parent: shop.common.common_controller
+      calls:
+        - [setProductService, ["@shop.website.product_service"]]

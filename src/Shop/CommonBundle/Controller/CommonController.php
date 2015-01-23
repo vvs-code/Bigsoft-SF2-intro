@@ -2,6 +2,7 @@
 namespace Shop\CommonBundle\Controller;
 
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -50,7 +51,6 @@ class CommonController
      * @param Router $router
      */
     public function setRouter(Router $router) {
-        var_dump($router); die;
         $this->router = $router;
     }
 
@@ -90,7 +90,7 @@ class CommonController
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      */
-    function createFormBuilder($type, $data = null, array $options = array())
+    function createFormBuilder($type = 'form', $data = null, array $options = array())
     {
         return $this->formFactory->createBuilder($type, $data, $options);
     }
@@ -109,6 +109,14 @@ class CommonController
     public function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         return $this->router->generate($route, $parameters, $referenceType);
+    }
+
+    /**
+     * @param $text
+     * @throws Exception
+     */
+    protected function createNotFoundException($text) {
+        throw new Exception($text);
     }
 
 }

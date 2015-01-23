@@ -81,6 +81,15 @@ class ProductService implements ProductServiceInterface
     }
 
     /**
+     * @param $id
+     * @return mixed
+     */
+    public function findById($id){
+        $arr = $this->findBy(['id' => $id]);
+        return array_shift($arr);
+    }
+
+    /**
      * @inheritDoc
      */
     public function getPagination(Paginator $paginator, $page = 1, $limit = 10, array $options = [])
