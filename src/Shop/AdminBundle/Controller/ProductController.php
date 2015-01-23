@@ -7,15 +7,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\AdminBundle\Form\ProductType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Shop\CommonBundle\Controller\CommonController;
 
 /**
  * Product controller.
  *
  * @Route("/product")
  */
-class ProductController extends Controller
+class ProductController extends CommonController
 {
 
     /**

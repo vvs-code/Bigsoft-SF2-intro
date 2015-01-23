@@ -7,5 +7,6 @@ services:
       abstract: true
       class: %shop.common.common_controller%
       calls:
+        - [setRouter, ["@router"]]
         - [setTemplating, ["@templating"]]
         - [setFormFactory, ["@form.factory"]]

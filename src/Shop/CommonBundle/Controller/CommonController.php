@@ -5,6 +5,8 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use \Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Class CommonController
@@ -16,6 +18,11 @@ class CommonController
      * @var  EngineInterface Should contain templating-engine instance
      */
     protected $templating;
+
+    /**
+     * @var Router
+     */
+    protected $router;
 
     /**
      * @var FormFactory
@@ -32,8 +39,19 @@ class CommonController
         $this->templating = $templating;
     }
 
+    /**
+     * @param FormFactory $ff
+     */
     public function setFormFactory(FormFactory $ff){
         $this->formFactory = $ff;
+    }
+
+    /**
+     * @param Router $router
+     */
+    public function setRouter(Router $router) {
+        var_dump($router); die;
+        $this->router = $router;
     }
 
     /**
@@ -75,6 +93,22 @@ class CommonController
     function createFormBuilder($type, $data = null, array $options = array())
     {
         return $this->formFactory->createBuilder($type, $data, $options);
+    }
+
+    /**
+     * Generates a URL from the given parameters.
+     *
+     * @param string      $route         The name of the route
+     * @param mixed       $parameters    An array of parameters
+     * @param bool|string $referenceType The type of reference (one of the constants in UrlGeneratorInterface)
+     *
+     * @return string The generated URL
+     *
+     * @see UrlGeneratorInterface
+     */
+    public function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    {
+        return $this->router->generate($route, $parameters, $referenceType);
     }
 
 }
