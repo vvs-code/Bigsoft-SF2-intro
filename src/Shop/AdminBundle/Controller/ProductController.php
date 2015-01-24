@@ -35,7 +35,7 @@ class ProductController extends CommonController
      */
     public function createAction(Request $request)
     {
-        $entity = new Product();
+        $entity = $this->productService->createProduct();
         $form = $this->createProductForm($entity);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -117,7 +117,7 @@ class ProductController extends CommonController
      */
     public function newAction()
     {
-        $entity = new Product();
+        $entity = $this->productService->createProduct();
         $form = $this->createProductForm($entity);
         return array(
             'entity' => $entity,
