@@ -1,12 +1,9 @@
 <?php
-
 namespace Shop\AdminBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Shop\AdminBundle\Form\ProductType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Shop\CommonBundle\Controller\CommonController;
 use Shop\WebSiteBundle\Entity\Product;
@@ -39,13 +36,10 @@ class ProductController extends CommonController
         $entity = new Product();
         $form = $this->createProductForm($entity);
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             $this->productService->save($entity);
-
             return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
         }
-
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
@@ -63,7 +57,6 @@ class ProductController extends CommonController
     {
         $entity = new Product();
         $form = $this->createProductForm($entity);
-
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
@@ -82,12 +75,8 @@ class ProductController extends CommonController
     public function showAction($id)
     {
         $entity = $this->getProductById($id);
-
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
             'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -103,17 +92,12 @@ class ProductController extends CommonController
     public function editAction($id)
     {
         $entity = $this->getProductById($id);
-
         $editForm = $this->createProductForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
-
 
     /**
      * Edits an existing Product entity.
@@ -121,25 +105,20 @@ class ProductController extends CommonController
      * @Route("/{id}", name="admin_product_update", requirements={
      *     "id": "\d+"
      * })
-     * @Method("PUT")
+     * @Method("POST")
      * @Template("AdminBundle:Product:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $entity = $this->getProductById($id);
-
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createProductForm($entity);
         $editForm->handleRequest($request);
-
         if ($editForm->isValid()) {
-            return $this->redirect($this->generateUrl('admin_product_edit', array('id' => $id)));
+            $this->productService->save($entity);
         }
-
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -153,33 +132,11 @@ class ProductController extends CommonController
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $entity = $this->getProductById($id);
-
-            $em->remove($entity);
-            $em->flush();
+        $entity = $this->getProductById($id);
+        if ($entity) {
+            $this->productService->remove($entity);
         }
-
-        return $this->redirect($this->generateUrl('admin_product'));
-    }
-
-    /**
-     * Creates a form to delete a Product entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_product_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm();
+        return $this->redirect($this->generateUrl('main_page'));
     }
 
     /**
@@ -190,33 +147,33 @@ class ProductController extends CommonController
         $this->productService = $productService;
     }
 
+    /**
+     * @param Product $entity
+     * @return mixed
+     */
     public function createProductForm(Product $entity)
     {
         $entityId = $entity->getId();
-
+        $submitMethod = "POST";
         if ($entityId) {
             $submitLabel = "Update";
-            $submitMethod = "PUT";
             $submitAction = $this->generateUrl('admin_product_update', array('id' => $entity->getId()));
         } else {
             $submitLabel = "Create";
-            $submitMethod = "POST";
             $submitAction = $this->generateUrl('admin_product_create');
         }
-
         $form = $this->createFormBuilder(new ProductType(), $entity, array(
             'action' => $submitAction,
             'method' => $submitMethod
-        ))
-            ->addEventListener(FormEvents::SUBMIT, function($event) {
-                $this->onFormSubmit($event);
-            }, 900)
-            ->getForm()
-            ->add('submit', 'submit', array('label' => $submitLabel));
-
+        ))->addEventListener(FormEvents::SUBMIT, function ($event) {
+            $this->onFormSubmit($event);
+        }, 900)->getForm()->add('submit', 'submit', array('label' => $submitLabel));
         return $form;
     }
 
+    /**
+     * @param $event
+     */
     protected function onFormSubmit($event)
     {
         /**
@@ -224,20 +181,13 @@ class ProductController extends CommonController
          */
         $product = $event->getData();
         $form = $event->getForm();
-
         /**
          * @var UploadedFile
          */
         $file = $product->getFile();
-        if($file instanceof UploadedFile) {
-            $dirName = sprintf('images/', time());
-            $fileName = sprintf('%d_%s', time(), $file->getFilename());
-            $file->move('$fileName', $fileName);
-            $product->setImage($dirName.$fileName);
+        if ($file instanceof UploadedFile) {
+            $product->setImage($this->moveUploadedFile($file));
         }
-
-        var_dump($product);
-        //var_dump($event);
     }
 
     /**
@@ -246,13 +196,26 @@ class ProductController extends CommonController
      * @throws \Symfony\Component\Security\Acl\Exception\Exception
      * @throws void
      */
-    protected function getProductById($id) {
+    protected function getProductById($id)
+    {
         $entity = $this->productService->findById($id);
-
         if (!$entity) {
-            throw $this->createNotFoundException(sprintf('Unable to find Product entity #%s', $id));
+            $this->createNotFoundException(sprintf('Unable to find Product entity #%s', $id));
         }
-
         return $entity;
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return string
+     */
+    protected function moveUploadedFile(UploadedFile $file)
+    {
+        $dirName = sprintf('images/', time());
+        $fileName = sprintf('%d_%s', time(), $file->getClientOriginalName());
+        //$file->move($dirName, $fileName);
+        copy($file->getPathname(), $dirName . $fileName);
+        //unlink($file->getPathname());
+        return $dirName . $fileName;
     }
 }

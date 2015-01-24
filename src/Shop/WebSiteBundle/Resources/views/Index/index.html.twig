@@ -4,7 +4,7 @@
 {% block body %}
     <ul class="pagination">
         {% for product in pagination %}
-            <li>{{ common.printProduct(product) }}</li>
+            <li>{{ common.printProduct(product) }}{{ common.productActionsBlock(product) }}</li>
         {% else %}
             <li>No items</li>
         {% endfor %}

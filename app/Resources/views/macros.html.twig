@@ -40,6 +40,25 @@
     </div>
 {% endmacro %}
 
+{%  macro productActionsBlock(product) %}
+    {%  if is_granted('ROLE_ADMIN') -%}
+        <ul>
+            <li>
+                <a href="{{  path('admin_product_edit', { 'id': product.id }) }}">
+                    Edit
+                </a>
+            </li>
+            <li>
+                <form name="form" method="post" action="{{  path('admin_product_delete', { 'id': product.id }) }}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" id="form_submit" name="form[submit]">Delete</button>
+                </form>
+            </li>
+        </ul>
+
+    {% endif %}
+{% endmacro %}
+
 {% macro printProduct(product) %}
     <img src="{{ product.image }}" align="left"/><strong>{{ product.title }}</strong><button>Buy</button>
     <p>{{ product.description|raw }}</p>

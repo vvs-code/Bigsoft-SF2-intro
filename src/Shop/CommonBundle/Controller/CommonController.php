@@ -43,14 +43,16 @@ class CommonController
     /**
      * @param FormFactory $ff
      */
-    public function setFormFactory(FormFactory $ff){
+    public function setFormFactory(FormFactory $ff)
+    {
         $this->formFactory = $ff;
     }
 
     /**
      * @param Router $router
      */
-    public function setRouter(Router $router) {
+    public function setRouter(Router $router)
+    {
         $this->router = $router;
     }
 
@@ -68,9 +70,9 @@ class CommonController
     /**
      * Creates and returns a Form instance from the type of the form.
      *
-     * @param string|FormTypeInterface $type    The built type of the form
-     * @param mixed                    $data    The initial data for the form
-     * @param array                    $options Options for the form
+     * @param string|FormTypeInterface $type The built type of the form
+     * @param mixed $data The initial data for the form
+     * @param array $options Options for the form
      *
      * @return Form
      */
@@ -82,9 +84,9 @@ class CommonController
     /**
      * Returns a form builder.
      *
-     * @param string|FormTypeInterface $type    The type of the form
-     * @param mixed                    $data    The initial data
-     * @param array                    $options The options
+     * @param string|FormTypeInterface $type The type of the form
+     * @param mixed $data The initial data
+     * @param array $options The options
      *
      * @return FormBuilderInterface The form builder
      *
@@ -98,8 +100,8 @@ class CommonController
     /**
      * Generates a URL from the given parameters.
      *
-     * @param string      $route         The name of the route
-     * @param mixed       $parameters    An array of parameters
+     * @param string $route The name of the route
+     * @param mixed $parameters An array of parameters
      * @param bool|string $referenceType The type of reference (one of the constants in UrlGeneratorInterface)
      *
      * @return string The generated URL
@@ -115,8 +117,18 @@ class CommonController
      * @param $text
      * @throws Exception
      */
-    protected function createNotFoundException($text) {
+    protected function createNotFoundException($text)
+    {
         throw new Exception($text);
+    }
+
+    /**
+     * @param $url
+     */
+    protected function redirect($url)
+    {
+        header(sprintf('Location: %s', $url));
+        die;
     }
 
 }
