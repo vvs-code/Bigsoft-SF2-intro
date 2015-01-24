@@ -6,7 +6,6 @@
 {% endmacro %}
 
 {% macro header() %}
-    {% import _self as common %}
     {% set menuList = [
     {'name' : 'Main', 'route' : path('main_page')},
     {'name' : 'Contacts', 'route' : path('contacts_page')},
@@ -29,7 +28,7 @@
             {% if  app.user %}
                 <li>
                     <strong>{{ app.user.username }}
-                        {% if is_granted('ROLE_ADMIN') -%}{{ common.adminHeader() }}{% endif %}
+                        {% if is_granted('ROLE_ADMIN') -%}{{ _self.adminHeader() }}{% endif %}
                     </strong>
                 </li>
                 <li>
@@ -70,8 +69,7 @@
 {% endmacro %}
 
 {% macro printProduct(product) %}
-    {% import _self as common %}
     <img src="{{ product.image }}" align="left"/><strong>{{ product.title }}</strong>
     <button>Buy</button>
-    <p>{{ product.description|raw }}</p>{{ common.productActionsBlock(product) }}
+    <p>{{ product.description|raw }}</p>{{ _self.productActionsBlock(product) }}
 {% endmacro %}
