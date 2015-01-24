@@ -2,7 +2,6 @@ web_site:
   resource: "@WebSiteBundle/Controller"
   type:     annotation
 
-
 about_page:
     path: /page/about
     defaults:
