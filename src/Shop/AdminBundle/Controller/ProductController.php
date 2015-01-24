@@ -48,6 +48,63 @@ class ProductController extends CommonController
     }
 
     /**
+     * @param Product $entity
+     * @return mixed
+     */
+    public function createProductForm(Product $entity)
+    {
+        $entityId = $entity->getId();
+        $submitMethod = "POST";
+        if ($entityId) {
+            $submitLabel = "Update";
+            $submitAction = $this->generateUrl('admin_product_update', array('id' => $entity->getId()));
+        } else {
+            $submitLabel = "Create";
+            $submitAction = $this->generateUrl('admin_product_create');
+        }
+        $form = $this->createFormBuilder(new ProductType(), $entity, array(
+            'action' => $submitAction,
+            'method' => $submitMethod
+        ))->addEventListener(FormEvents::SUBMIT, function ($event) {
+            $this->onFormSubmit($event);
+        }, 900)->getForm()->add('submit', 'submit', array('label' => $submitLabel));
+        return $form;
+    }
+
+    /**
+     * @param $event
+     */
+    protected function onFormSubmit($event)
+    {
+        /**
+         * @var Product
+         */
+        $product = $event->getData();
+        $form = $event->getForm();
+        /**
+         * @var UploadedFile
+         */
+        $file = $product->getFile();
+        if ($file instanceof UploadedFile) {
+            $product->setImage($this->moveUploadedFile($file));
+        }
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return string
+     */
+    protected function moveUploadedFile(UploadedFile $file)
+    {
+        $dirName = sprintf('images/', time());
+        $fileName = sprintf('%d_%s', time(), $file->getClientOriginalName());
+        //$file->move($dirName, $fileName);
+        copy($file->getPathname(), $dirName . $fileName);
+        //unlink($file->getPathname());
+        return $dirName . $fileName;
+    }
+
+    /**
      * Displays a form to create a new Product entity.
      *
      * @Route("/new", name="admin_product_new")
@@ -79,6 +136,21 @@ class ProductController extends CommonController
         return array(
             'entity' => $entity,
         );
+    }
+
+    /**
+     * @param $id
+     * @return Product|null
+     * @throws \Symfony\Component\Security\Acl\Exception\Exception
+     * @throws void
+     */
+    protected function getProductById($id)
+    {
+        $entity = $this->productService->findById($id);
+        if (!$entity) {
+            $this->createNotFoundException(sprintf('Unable to find Product entity #%s', $id));
+        }
+        return $entity;
     }
 
     /**
@@ -146,77 +218,5 @@ class ProductController extends CommonController
     public function setProductService(ProductService $productService)
     {
         $this->productService = $productService;
-    }
-
-    /**
-     * @param Product $entity
-     * @return mixed
-     */
-    public function createProductForm(Product $entity)
-    {
-        $entityId = $entity->getId();
-        $submitMethod = "POST";
-        if ($entityId) {
-            $submitLabel = "Update";
-            $submitAction = $this->generateUrl('admin_product_update', array('id' => $entity->getId()));
-        } else {
-            $submitLabel = "Create";
-            $submitAction = $this->generateUrl('admin_product_create');
-        }
-        $form = $this->createFormBuilder(new ProductType(), $entity, array(
-            'action' => $submitAction,
-            'method' => $submitMethod
-        ))->addEventListener(FormEvents::SUBMIT, function ($event) {
-            $this->onFormSubmit($event);
-        }, 900)->getForm()->add('submit', 'submit', array('label' => $submitLabel));
-        return $form;
-    }
-
-    /**
-     * @param $event
-     */
-    protected function onFormSubmit($event)
-    {
-        /**
-         * @var Product
-         */
-        $product = $event->getData();
-        $form = $event->getForm();
-        /**
-         * @var UploadedFile
-         */
-        $file = $product->getFile();
-        if ($file instanceof UploadedFile) {
-            $product->setImage($this->moveUploadedFile($file));
-        }
-    }
-
-    /**
-     * @param $id
-     * @return Product|null
-     * @throws \Symfony\Component\Security\Acl\Exception\Exception
-     * @throws void
-     */
-    protected function getProductById($id)
-    {
-        $entity = $this->productService->findById($id);
-        if (!$entity) {
-            $this->createNotFoundException(sprintf('Unable to find Product entity #%s', $id));
-        }
-        return $entity;
-    }
-
-    /**
-     * @param UploadedFile $file
-     * @return string
-     */
-    protected function moveUploadedFile(UploadedFile $file)
-    {
-        $dirName = sprintf('images/', time());
-        $fileName = sprintf('%d_%s', time(), $file->getClientOriginalName());
-        //$file->move($dirName, $fileName);
-        copy($file->getPathname(), $dirName . $fileName);
-        //unlink($file->getPathname());
-        return $dirName . $fileName;
     }
 }

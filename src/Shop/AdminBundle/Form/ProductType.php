@@ -14,18 +14,12 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('title')
-            ->add('description')
-            ->add('file', 'file', [
+        $builder->add('title')->add('description')->add('file', 'file', [
                 'required' => false,
                 'attr' => ['accept' => "image/*"]
-            ])
-            ->add('image', 'hidden')
-            ->add('price', 'number')
-        ;
+            ])->add('image', 'hidden')->add('price', 'number');
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
