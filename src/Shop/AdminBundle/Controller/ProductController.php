@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  * Class ProductController
  * @package Shop\AdminBundle\Controller
  * @Route("/product", service="shop.admin.product_controller")
- *
  */
 class ProductController extends CommonController
 {
