@@ -5,12 +5,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Shop\AdminBundle\Form\ProductType;
-use Symfony\Component\HttpFoundation\Request;
 use Shop\CommonBundle\Controller\CommonController;
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Service\ProductService;
+use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ProductController
@@ -23,7 +24,7 @@ class ProductController extends CommonController
     /**
      * @var ProductService
      */
-    private $productService;
+    protected $productService;
 
     /**
      * Creates a new Product entity.
@@ -54,7 +55,7 @@ class ProductController extends CommonController
     public function createProductForm(Product $entity)
     {
         $entityId = $entity->getId();
-        $submitMethod = "POST";
+
         if ($entityId) {
             $submitLabel = "Update";
             $submitAction = $this->generateUrl('admin_product_update', array('id' => $entity->getId()));
@@ -62,25 +63,28 @@ class ProductController extends CommonController
             $submitLabel = "Create";
             $submitAction = $this->generateUrl('admin_product_create');
         }
+
         $form = $this->createFormBuilder(new ProductType(), $entity, array(
             'action' => $submitAction,
-            'method' => $submitMethod
+            'method' => 'POST'
         ))->addEventListener(FormEvents::SUBMIT, function ($event) {
             $this->onFormSubmit($event);
-        }, 900)->getForm()->add('submit', 'submit', array('label' => $submitLabel));
+        }, 900)
+            ->getForm()
+            ->add('submit', 'submit', array('label' => $submitLabel));
         return $form;
     }
 
     /**
      * @param $event
      */
-    protected function onFormSubmit($event)
+    protected function onFormSubmit(FormEvent  $event)
     {
         /**
          * @var Product
          */
         $product = $event->getData();
-        $form = $event->getForm();
+
         /**
          * @var UploadedFile
          */
