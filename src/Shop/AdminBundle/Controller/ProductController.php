@@ -40,12 +40,12 @@ class ProductController extends CommonController
         $form->handleRequest($request);
         if ($form->isValid()) {
             $this->productService->save($entity);
-            return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_product_show', ['id' => $entity->getId()]));
         }
-        return array(
+        return [
             'entity' => $entity,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -58,20 +58,20 @@ class ProductController extends CommonController
 
         if ($entityId) {
             $submitLabel = "Update";
-            $submitAction = $this->generateUrl('admin_product_update', array('id' => $entity->getId()));
+            $submitAction = $this->generateUrl('admin_product_update', ['id' => $entity->getId()]);
         } else {
             $submitLabel = "Create";
             $submitAction = $this->generateUrl('admin_product_create');
         }
 
-        $form = $this->createFormBuilder(new ProductType(), $entity, array(
+        $form = $this->createFormBuilder(new ProductType(), $entity, [
             'action' => $submitAction,
             'method' => 'POST'
-        ))->addEventListener(FormEvents::SUBMIT, function ($event) {
+        ])->addEventListener(FormEvents::SUBMIT, function ($event) {
             $this->onFormSubmit($event);
         }, 900)
             ->getForm()
-            ->add('submit', 'submit', array('label' => $submitLabel));
+            ->add('submit', 'submit', ['label' => $submitLabel]);
         return $form;
     }
 
@@ -119,10 +119,10 @@ class ProductController extends CommonController
     {
         $entity = $this->productService->createProduct();
         $form = $this->createProductForm($entity);
-        return array(
+        return [
             'entity' => $entity,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -137,9 +137,7 @@ class ProductController extends CommonController
     public function showAction($id)
     {
         $entity = $this->getProductById($id);
-        return array(
-            'entity' => $entity,
-        );
+        return ['entity' => $entity];
     }
 
     /**
@@ -170,10 +168,10 @@ class ProductController extends CommonController
     {
         $entity = $this->getProductById($id);
         $editForm = $this->createProductForm($entity);
-        return array(
+        return [
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -193,10 +191,10 @@ class ProductController extends CommonController
         if ($editForm->isValid()) {
             $this->productService->save($entity);
         }
-        return array(
+        return [
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-        );
+        ];
     }
 
     /**

@@ -25,9 +25,7 @@ class ProductType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Shop\WebSiteBundle\Entity\Product'
-        ));
+        $resolver->setDefaults(['data_class' => 'Shop\WebSiteBundle\Entity\Product']);
     }
 
     /**

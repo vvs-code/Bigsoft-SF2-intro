@@ -76,7 +76,7 @@ class CommonController
      *
      * @return Form
      */
-    function createForm($type, $data = null, array $options = array())
+    function createForm($type, $data = null, array $options = [])
     {
         return $this->createFormBuilder($type, $data, $options)->getForm();
     }
@@ -92,7 +92,7 @@ class CommonController
      *
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException if any given option is not applicable to the given type
      */
-    function createFormBuilder($type = 'form', $data = null, array $options = array())
+    function createFormBuilder($type = 'form', $data = null, array $options = [])
     {
         return $this->formFactory->createBuilder($type, $data, $options);
     }
@@ -108,7 +108,7 @@ class CommonController
      *
      * @see UrlGeneratorInterface
      */
-    public function generateUrl($route, $parameters = array(), $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public function generateUrl($route, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
     {
         return $this->router->generate($route, $parameters, $referenceType);
     }
