@@ -13,3 +13,4 @@ UPGRADE*.md
 LICENSE
 .idea
 atlassian-ide-plugin.xml
+app/SymfonyRequirements.php
