@@ -1,9 +1,12 @@
 <?php
-
 namespace Shop\AdminBundle\Form;
 
+use Shop\WebSiteBundle\Entity\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ProductType extends AbstractType
@@ -14,10 +17,18 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $product = $builder->getData();
+        $productId = $product->getId();
+        $submitLabel = $productId ? 'Update': 'Create';
+
         $builder->add('title')->add('description')->add('file', 'file', [
                 'required' => false,
                 'attr' => ['accept' => "image/*"]
-            ])->add('image', 'hidden')->add('price', 'number');
+            ])->add('image', 'hidden')->add('price', 'number')
+            ->add('submit', 'submit', ['label' => $submitLabel])
+            ->addEventListener(FormEvents::SUBMIT, function ($event) {
+                $this->onFormSubmit($event);
+            }, 900);
     }
 
     /**
@@ -34,5 +45,38 @@ class ProductType extends AbstractType
     public function getName()
     {
         return 'shop_websitebundle_product';
+    }
+
+    /**
+     * @param $event
+     */
+    protected function onFormSubmit(FormEvent  $event)
+    {
+        /**
+         * @var Product
+         */
+        $product = $event->getData();
+
+        /**
+         * @var UploadedFile
+         */
+        $file = $product->getFile();
+        if ($file instanceof UploadedFile) {
+            $product->setImage($this->moveUploadedFile($file));
+        }
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return string
+     */
+    protected function moveUploadedFile(UploadedFile $file)
+    {
+        $dirName = sprintf('images/', time());
+        $fileName = sprintf('%d_%s', time(), $file->getClientOriginalName());
+        //$file->move($dirName, $fileName);
+        copy($file->getPathname(), $dirName . $fileName);
+        //unlink($file->getPathname());
+        return $dirName . $fileName;
     }
 }

@@ -5,6 +5,19 @@
     </ul>
 {% endmacro %}
 
+{% macro emptyPostForm(action, btnName = '', methodName = '') %}
+    <form name="form" method="post" action="{{ action }}">
+        {% if btnName %}
+            <button type="submit" id="form_submit" name="form[submit]">{{ btnName }}</button>
+        {% else %}
+            <button type="submit" id="form_submit" name="form[submit]">Submit</button>
+        {% endif %}
+        {% if methodName %}
+            <input type="hidden" name="_method" value="{{ methodName }}">
+        {% endif %}
+    </form>
+{% endmacro %}
+
 {% macro header() %}
     {% set menuList = [
     {'name' : 'Main', 'route' : path('main_page')},
@@ -49,10 +62,7 @@
                 </a>
             </li>
             <li>
-                <form name="form" method="post" action="{{ path('admin_product_delete', { 'id': product.id }) }}">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" id="form_submit" name="form[submit]">Delete</button>
-                </form>
+                {{ _self.emptyPostForm(path('admin_product_delete', { 'id': product.id }), "Remove", "DELETE") }}
             </li>
         </ul>
 
