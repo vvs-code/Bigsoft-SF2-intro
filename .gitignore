@@ -14,3 +14,4 @@ LICENSE
 .idea
 atlassian-ide-plugin.xml
 app/SymfonyRequirements.php
+web/images
