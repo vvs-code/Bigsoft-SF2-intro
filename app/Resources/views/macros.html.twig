@@ -14,13 +14,6 @@
     ] %}
     <div class="header">
         <h1>Page title</h1>
-        <style>
-            .header-menu li {
-                display: inline-block;
-                width: 15%;
-                border: 1px dotted yellow;
-            }
-        </style>
         <ul class="header-menu">
             {% for menu in menuList %}
                 <li><a href="{{ menu.route }}">{{ menu.name }}</a></li>
@@ -32,9 +25,7 @@
                     </strong>
                 </li>
                 <li>
-                    <form action="{{ path('logout') }}">
-                        <button>Logout</button>
-                    </form>
+                    <a href="{{ path('logout') }}">Logout</a>
                 </li>
             {% else %}
                 <li><a href="{{ path('shop_login') }}">Log in</a></li>

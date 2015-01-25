@@ -5,6 +5,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link href="{{ asset('css/styles.css', absolute=true) }}" rel="stylesheet" />
     </head>
     <body>
         {% import 'macros.html.twig' as common %}
