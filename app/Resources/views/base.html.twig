@@ -2,16 +2,23 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link href="{{ asset('css/styles.css', absolute=true) }}" rel="stylesheet" />
+        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
+        <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     </head>
     <body>
-        {% import 'macros.html.twig' as common %}
-        {{ common.header() }}
-        {% block body %}{% endblock %}
-        {{ common.footer() }}
-        {% block javascripts %}{% endblock %}
+    {% import 'macros.html.twig' as common %}
+    {{ common.header(block('title')) }}
+        <div class="container">
+            <div class="starter-template">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+    {% block javascripts %}{% endblock %}
+    {{ common.footer() }}
     </body>
 </html>

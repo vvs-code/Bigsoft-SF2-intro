@@ -1,5 +1,7 @@
-.header-menu li {
-    display: inline-block;
-    width: 15%;
-    border: 1px dotted yellow;
+body {
+    padding-top: 50px;
+}
+.starter-template {
+    padding: 40px 15px;
+    text-align: center;
 }
