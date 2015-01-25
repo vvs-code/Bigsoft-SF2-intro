@@ -1,14 +1,15 @@
 <?php
 namespace Shop\CommonBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use \Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class CommonController
@@ -120,7 +121,7 @@ class CommonController
      */
     protected function createNotFoundException($text)
     {
-        throw new Exception($text);
+        throw new NotFoundHttpException($text);
     }
 
     /**
