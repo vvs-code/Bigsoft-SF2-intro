@@ -59,21 +59,6 @@ class ProductController extends CommonController
     }
 
     /**
-     * @param $id
-     * @return Product|null
-     * @throws \Symfony\Component\Security\Acl\Exception\Exception
-     * @throws void
-     */
-    protected function getProductById($id)
-    {
-        $entity = $this->productService->findById($id);
-        if (!$entity) {
-            $this->createNotFoundException(sprintf('Unable to find Product entity #%s', $id));
-        }
-        return $entity;
-    }
-
-    /**
      * Displays a form to edit an existing Product entity.
      *
      * @Route("/{id}/edit", name="admin_product_edit", requirements={
@@ -110,6 +95,21 @@ class ProductController extends CommonController
             $this->productService->remove($entity);
         }
         return $this->redirect($this->generateUrl('main_page'));
+    }
+
+    /**
+     * @param $id
+     * @return Product|null
+     * @throws \Symfony\Component\Security\Acl\Exception\Exception
+     * @throws void
+     */
+    protected function getProductById($id)
+    {
+        $entity = $this->productService->findById($id);
+        if (!$entity) {
+            $this->createNotFoundException(sprintf('Unable to find Product entity #%s', $id));
+        }
+        return $entity;
     }
 
     /**

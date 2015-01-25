@@ -21,10 +21,14 @@ class ProductType extends AbstractType
         $productId = $product->getId();
         $submitLabel = $productId ? 'Update': 'Create';
 
-        $builder->add('title')->add('description')->add('file', 'file', [
+        $builder
+            ->add('title')
+            ->add('description')
+            ->add('file', 'file', [
                 'required' => false,
                 'attr' => ['accept' => "image/*"]
-            ])->add('image', 'hidden')->add('price', 'number')
+            ])
+            ->add('image', 'hidden')->add('price', 'number')
             ->add('submit', 'submit', ['label' => $submitLabel])
             ->addEventListener(FormEvents::SUBMIT, function ($event) {
                 $this->onFormSubmit($event);
@@ -74,9 +78,7 @@ class ProductType extends AbstractType
     {
         $dirName = sprintf('images/', time());
         $fileName = sprintf('%d_%s', time(), $file->getClientOriginalName());
-        //$file->move($dirName, $fileName);
         copy($file->getPathname(), $dirName . $fileName);
-        //unlink($file->getPathname());
         return $dirName . $fileName;
     }
 }

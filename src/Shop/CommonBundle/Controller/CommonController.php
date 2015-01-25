@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use \Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class CommonController
@@ -127,8 +128,7 @@ class CommonController
      */
     protected function redirect($url)
     {
-        header(sprintf('Location: %s', $url));
-        die;
+        return new RedirectResponse($url);
     }
 
 }
