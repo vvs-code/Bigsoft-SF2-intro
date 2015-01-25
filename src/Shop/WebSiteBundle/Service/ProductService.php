@@ -85,8 +85,7 @@ class ProductService implements ProductServiceInterface
      * @return mixed
      */
     public function findById($id){
-        $arr = $this->findBy(['id' => $id]);
-        return array_shift($arr);
+        return $this->productRepository->find($id);
     }
 
     /**
