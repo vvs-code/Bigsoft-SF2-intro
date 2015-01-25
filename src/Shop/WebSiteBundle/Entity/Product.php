@@ -3,6 +3,7 @@ namespace Shop\WebSiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="Shop\WebSiteBundle\Entity\ProductRepository")
@@ -50,7 +51,7 @@ Class Product implements \Serializable
     /**
      *  @Assert\Image()
      *
-     * @var
+     * @var UploadedFile
      */
     private $file;
 
@@ -159,11 +160,17 @@ Class Product implements \Serializable
         }
     }
 
+    /**
+     * @return UploadedFile
+     */
     public function getFile() {
         return $this->file;
     }
 
-    public function setFile($file) {
+    /**
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file) {
         $this->file = $file;
     }
 }
