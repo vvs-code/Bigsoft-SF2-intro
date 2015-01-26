@@ -5,10 +5,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            {% stylesheets '../src/Shop/WebSiteBundle/Resources/public/css/*' filter='cssrewrite' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
-        <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
     </head>
     <body>
     {% import 'macros.html.twig' as common %}
@@ -18,9 +20,10 @@
                 {% block body %}{% endblock %}
             </div>
         </div>
-    <script src="{{ asset('js/jquery-1.11.2.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
-    {% block javascripts %}{% endblock %}
-    {{ common.footer() }}
+    {% block javascripts %}
+        {% javascripts '../src/Shop/WebSiteBundle/Resources/public/js/*' output='js/compiled/script.js' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
     </body>
 </html>
