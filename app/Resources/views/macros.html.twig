@@ -5,15 +5,12 @@
     </ul>
 {% endmacro %}
 
-{% macro emptyPostForm(action, btnName = '', methodName = '') %}
+{% macro emptyPostForm(action, btnName) %}
     <form name="form" method="post" action="{{ action }}">
         {% if btnName %}
             <button type="submit" id="form_submit" name="form[submit]">{{ btnName }}</button>
         {% else %}
             <button type="submit" id="form_submit" name="form[submit]">Submit</button>
-        {% endif %}
-        {% if methodName %}
-            <input type="hidden" name="_method" value="{{ methodName }}">
         {% endif %}
     </form>
 {% endmacro %}
@@ -29,20 +26,21 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">{% if title %}{{  title  }}{% endif %}</a>
+                <a class="navbar-brand" href="#">{% if title %}{{ title }}{% endif %}</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     {% for menu in menuList %}
                         <li><a href="{{ menu.route }}">{{ menu.name }}</a></li>
                     {% endfor %}
-                    {% if  app.user %}
+                    {% if app.user %}
                         <li>
                             <strong>{{ app.user.username }}
                                 {% if is_granted('ROLE_ADMIN') -%}{{ _self.adminHeader() }}{% endif %}
@@ -55,7 +53,8 @@
                         <li><a href="{{ path('shop_login') }}">Log in</a></li>
                     {% endif %}
                 </ul>
-            </div><!--/.nav-collapse -->
+            </div>
+            <!--/.nav-collapse -->
         </div>
     </nav>
 {% endmacro %}
@@ -75,7 +74,7 @@
                 </a>
             </li>
             <li>
-                {{ _self.emptyPostForm(path('admin_product_delete', { 'id': product.id }), "Remove", "DELETE") }}
+                {{ _self.emptyPostForm(path('admin_product_delete', { 'id': product.id }), "Remove") }}
             </li>
         </ul>
 

@@ -9,6 +9,7 @@ use Shop\CommonBundle\Controller\CommonController;
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Service\ProductService;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Acl\Exception\Exception;
 
 /**
  * Class ProductController
@@ -17,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductController extends CommonController
 {
+    const MESSAGE_PRODUCT_NOT_FOUND = 'Unable to find Product entity #%s';
+
     /**
      * @var ProductService
      */
@@ -86,28 +89,27 @@ class ProductController extends CommonController
      * @Route("/{id}", name="admin_product_delete", requirements={
      *     "id": "\d+"
      * })
-     * @Method("DELETE")
+     * @Method("POST")
      */
     public function deleteAction(Request $request, $id)
     {
         $entity = $this->getProductById($id);
-        if ($entity) {
-            $this->productService->remove($entity);
-        }
+        $this->productService->remove($entity);
+
         return $this->redirect($this->generateUrl('main_page'));
     }
 
     /**
      * @param $id
      * @return Product|null
-     * @throws \Symfony\Component\Security\Acl\Exception\Exception
+     * @throws Exception
      * @throws void
      */
     protected function getProductById($id)
     {
         $entity = $this->productService->findById($id);
-        if (!$entity) {
-            $this->createNotFoundException(sprintf('Unable to find Product entity #%s', $id));
+        if (!($entity instanceof Product)) {
+            $this->createNotFoundException(sprintf(self::MESSAGE_PRODUCT_NOT_FOUND, $id));
         }
         return $entity;
     }

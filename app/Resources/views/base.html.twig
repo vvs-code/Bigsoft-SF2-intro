@@ -1,29 +1,29 @@
+{% import 'macros.html.twig' as common %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            {% stylesheets '../src/Shop/WebSiteBundle/Resources/public/css/*' filter='cssrewrite' %}
-                <link rel="stylesheet" href="{{ asset_url }}" />
-            {% endstylesheets %}
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-    {% import 'macros.html.twig' as common %}
-    {{ common.header(block('title')) }}
-        <div class="container">
-            <div class="starter-template">
-                {% block body %}{% endblock %}
-            </div>
-        </div>
-    {% block javascripts %}
-        {% javascripts '../src/Shop/WebSiteBundle/Resources/public/js/*' output='js/compiled/script.js' %}
-            <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {% stylesheets '../src/Shop/WebSiteBundle/Resources/public/css/*' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}"/>
+        {% endstylesheets %}
     {% endblock %}
-    </body>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+{{ common.header(block('title')) }}
+<div class="container">
+    <div class="starter-template">
+        {% block body %}{% endblock %}
+    </div>
+</div>
+{% block javascripts %}
+    {% javascripts '@WebSiteBundle/Resources/public/js/*' output='js/compiled/script.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+</body>
 </html>
