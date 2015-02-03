@@ -3,6 +3,8 @@ parameters:
     shop.website.product_service: Shop\WebSiteBundle\Service\ProductService
     shop.website.product_repository: Shop\WebSiteBundle\Entity\ProductRepository
     shop.website.shopping_cart_service: Shop\WebSiteBundle\Service\ShoppingCartService
+    shop.website.shopping_cart_controller: Shop\WebSiteBundle\Controller\ShoppingCartController
+
 
 services:
   shop.website.product_repository:
@@ -15,7 +17,7 @@ services:
       class: %shop.website.product_service%
       arguments: ["@shop.website.product_repository"]
   shop.website.shopping_cart_service:
-      class: % shop.website.shopping_cart_service%
+      class: %shop.website.shopping_cart_service%
       calls:
         - [setProductRepository, ["@shop.website.product_service"]]
   shop.website.index_controller:
@@ -25,3 +27,8 @@ services:
         - [setProductService, ["@shop.website.product_service"]]
         - [setPaginator, ["@knp_paginator"]]
         - [setPageQueryKey, ["%page_query_key%"]]
+  shop.website.shopping_cart_controller:
+      class: %shop.website.shopping_cart_controller%
+      parent: shop.common.common_controller
+      calls:
+        - [setShoppingCartService, ["@shop.website.shopping_cart_service"]]
