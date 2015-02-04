@@ -3,6 +3,7 @@ namespace Shop\WebSiteBundle\Service;
 
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Service\ProductService;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ShoppingCartService implements ShoppingCartServiceInterface
 {
@@ -11,8 +12,20 @@ class ShoppingCartService implements ShoppingCartServiceInterface
      */
     private $productService;
 
+    /**
+     * @var Session
+     */
+    private $session;
+
     public function setProductRepository(ProductService $productService) {
         $this->productService = $productService;
+    }
+
+    /**
+     * @param Session $session
+     */
+    public function setSession(Session $session){
+        $this->session = $session;
     }
 
     /**

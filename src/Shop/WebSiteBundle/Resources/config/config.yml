@@ -20,6 +20,7 @@ services:
       class: %shop.website.shopping_cart_service%
       calls:
         - [setProductRepository, ["@shop.website.product_service"]]
+        - [setSession, ["@session"]]
   shop.website.index_controller:
       class: %shop.website.index_controller%
       parent: shop.common.common_controller
