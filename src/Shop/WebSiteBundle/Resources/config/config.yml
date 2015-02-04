@@ -38,3 +38,5 @@ services:
       public: false
       tags:
           - { name: twig.extension }
+      calls:
+        - [setShoppingCartService, ["@shop.website.shopping_cart_service"]]

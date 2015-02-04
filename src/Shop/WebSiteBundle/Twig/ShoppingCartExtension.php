@@ -1,8 +1,22 @@
 <?php
 namespace Shop\WebSiteBundle\Twig;
 
+use Shop\WebSiteBundle\Service\ShoppingCartService;
+
 class ShoppingCartExtension extends \Twig_Extension
 {
+    /**
+     * @var ShoppingCartService
+     */
+    private $shoppingCartService;
+
+    /**
+     * @param ShoppingCartService $shoppingCartService
+     */
+    public function setShoppingCartService(ShoppingCartService $shoppingCartService) {
+        $this->shoppingCartService = $shoppingCartService;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -27,14 +41,14 @@ class ShoppingCartExtension extends \Twig_Extension
      * @return int
      */
     public function shoppingCartAmount() {
-        return 123;
+        return $this->shoppingCartService->getCartAmount();
     }
 
     /**
      * @return int
      */
     public function shoppingCartSum() {
-        return 900232;
+        return $this->shoppingCartService->getCartSum();
     }
 
     /**

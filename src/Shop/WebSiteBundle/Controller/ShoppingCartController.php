@@ -18,6 +18,9 @@ class ShoppingCartController extends Controller\CommonController
      */
     private $shoppingCartService;
 
+    /**
+     * @param ShoppingCartService $shoppingCartService
+     */
     public function setShoppingCartService(ShoppingCartService $shoppingCartService) {
         $this->shoppingCartService = $shoppingCartService;
     }
