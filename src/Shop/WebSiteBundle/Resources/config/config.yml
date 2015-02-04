@@ -33,3 +33,8 @@ services:
       parent: shop.common.common_controller
       calls:
         - [setShoppingCartService, ["@shop.website.shopping_cart_service"]]
+  shop.website.shopping_cart.twig_extension:
+      class: Shop\WebSiteBundle\Twig\ShoppingCartExtension
+      public: false
+      tags:
+          - { name: twig.extension }

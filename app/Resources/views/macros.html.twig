@@ -5,6 +5,13 @@
     </ul>
 {% endmacro %}
 
+{% macro shopingCartHeader() %}
+    <ul>
+        <li><span class="shopping-cart-amount">{{  shopping_cart_amount() }}</span></li>
+        <li><span class="shopping-cart-sum">{{  shopping_cart_sum() }}</span></li>
+    </ul>
+{% endmacro %}
+
 {% macro emptyPostForm(action, btnName) %}
     <form name="form" method="post" action="{{ action }}">
         {% if btnName %}
@@ -43,14 +50,21 @@
                     {% if app.user %}
                         <li>
                             <strong>{{ app.user.username }}
-                                {% if is_granted('ROLE_ADMIN') -%}{{ _self.adminHeader() }}{% endif %}
+                                {% if is_granted('ROLE_ADMIN') -%}
+                                    {{ _self.adminHeader() }}
+                                {% else %}
+                                    {{ _self.shopingCartHeader() }}
+                                {% endif %}
                             </strong>
                         </li>
                         <li>
                             <a href="{{ path('logout') }}">Logout</a>
                         </li>
                     {% else %}
-                        <li><a href="{{ path('shop_login') }}">Log in</a></li>
+                        <li>
+                            {{ _self.shopingCartHeader() }}
+                            <a href="{{ path('shop_login') }}">Log in</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>
