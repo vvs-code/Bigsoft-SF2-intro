@@ -1,23 +1,17 @@
 {% macro adminHeader() %}
-    <ul>
-        <li><a href="{{ path('shop_admin_index') }}">go to admin page</a></li>
-        <li><a href="{{ path('admin_product_new') }}">Add product</a></li>
-    </ul>
+    <li><a href="{{ path('shop_admin_index') }}">go to admin page</a></li>
+    <li><a href="{{ path('admin_product_new') }}">Add product</a></li>
 {% endmacro %}
 
 {% macro shopingCartHeader() %}
-    <ul>
-        <li><span class="shopping-cart-amount">{{  shopping_cart_amount() }}</span></li>
-        <li><span class="shopping-cart-sum">{{  shopping_cart_sum() }}</span></li>
-    </ul>
+    <li><a class="shopping-cart-amount">{{  shopping_cart_amount() }}</a></li>
+    <li><a class="shopping-cart-sum">{{  shopping_cart_sum() }}</a></li>
 {% endmacro %}
 
 {% macro emptyPostForm(action, btnName) %}
     <form name="form" method="post" action="{{ action }}">
         {% if btnName %}
-            <button type="submit" id="form_submit" name="form[submit]">{{ btnName }}</button>
-        {% else %}
-            <button type="submit" id="form_submit" name="form[submit]">Submit</button>
+            <button type="submit" id="form_submit" name="form[submit]">{{ btnName|default('Submit') }}</button>
         {% endif %}
     </form>
 {% endmacro %}
@@ -48,21 +42,20 @@
                         <li><a href="{{ menu.route }}">{{ menu.name }}</a></li>
                     {% endfor %}
                     {% if app.user %}
+                        {% if is_granted('ROLE_ADMIN') -%}
+                            {{ _self.adminHeader() }}
+                        {% else %}
+                            {{ _self.shopingCartHeader() }}
+                        {% endif %}
                         <li>
-                            <strong>{{ app.user.username }}
-                                {% if is_granted('ROLE_ADMIN') -%}
-                                    {{ _self.adminHeader() }}
-                                {% else %}
-                                    {{ _self.shopingCartHeader() }}
-                                {% endif %}
-                            </strong>
+                            <strong>{{ app.user.username }}</strong>
                         </li>
                         <li>
                             <a href="{{ path('logout') }}">Logout</a>
                         </li>
                     {% else %}
+                        {{ _self.shopingCartHeader() }}
                         <li>
-                            {{ _self.shopingCartHeader() }}
                             <a href="{{ path('shop_login') }}">Log in</a>
                         </li>
                     {% endif %}
@@ -97,6 +90,6 @@
 
 {% macro printProduct(product) %}
     <img src="{{ product.image }}" align="left"/><strong>{{ product.title }}</strong>
-    <button>Buy</button>
+    <div class="to-cart">{{ _self.emptyPostForm(path('add_to_shopping_cart',  { 'id': product.id }), 'Add to cart') }}</div>
     <p>{{ product.description|raw }}</p>{{ _self.productActionsBlock(product) }}
 {% endmacro %}

@@ -4,9 +4,18 @@ namespace Shop\WebSiteBundle\Service;
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Service\ProductService;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ShoppingCartService implements ShoppingCartServiceInterface
 {
+    const MESSAGE_PRODUCT_NOT_FOUND = 'Unable to find Product entity #%s';
+    const SESSION_CART_KEY = 'shopping_cart';
+
+    /**
+     * @var []
+     */
+    private $shoppingCart;
+
     /**
      * @var ProductService
      */
@@ -34,7 +43,14 @@ class ShoppingCartService implements ShoppingCartServiceInterface
      */
     public function addToCartById($id)
     {
-        // TODO: Implement addToCartById() method.
+        $product = $this->productService->findById($id);
+        if($product instanceof Product) {
+            $cart = $this->getSessionCart();
+            $cart[] = $id;
+            $this->setSessionCart($cart);
+        } else {
+            throw new NotFoundHttpException(sprintf(self::MESSAGE_PRODUCT_NOT_FOUND, $id));
+        }
     }
 
     /**
@@ -42,7 +58,7 @@ class ShoppingCartService implements ShoppingCartServiceInterface
      */
     public function getCartAmount()
     {
-        // TODO: Implement getCartAmount() method.
+        return 'DEBUG:'.count($this->session->get($this::SESSION_CART_KEY));
     }
 
     /**
@@ -50,7 +66,7 @@ class ShoppingCartService implements ShoppingCartServiceInterface
      */
     public function getCartSum()
     {
-        // TODO: Implement getCartSum() method.
+        return 'DEBUG:1987233$';
     }
 
     /**
@@ -67,5 +83,17 @@ class ShoppingCartService implements ShoppingCartServiceInterface
     public function getCartProducts()
     {
         // TODO: Implement getCartProducts() method.
+    }
+
+    private function getSessionCart() {
+        $cart = $this->session->get($this::SESSION_CART_KEY);
+        if(!is_array($cart)) {
+            $cart = [];
+        }
+        return $cart;
+    }
+
+    private function setSessionCart(array $cart) {
+        $this->session->set($this::SESSION_CART_KEY, $cart);
     }
 }
