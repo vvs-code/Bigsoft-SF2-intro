@@ -60,7 +60,9 @@ class ShoppingCartController extends Controller\CommonController
      * @Method("POST")
      */
     public function addToCartAction(Request $request, $id) {
-        $this->shoppingCartService->addToCartById($id);
+        if((bool)$this->validateEmptyPost($request)){
+            $this->shoppingCartService->addToCartById($id);
+        }
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
     }
@@ -70,7 +72,9 @@ class ShoppingCartController extends Controller\CommonController
      * @Method("POST")
      */
     public function clearCartAction(Request $request) {
-        $this->shoppingCartService->clearCart();
+        if((bool)$this->validateEmptyPost($request)) {
+            $this->shoppingCartService->clearCart();
+        }
         $referer = $request->headers->get('referer');
         return $this->redirect($referer);
     }
