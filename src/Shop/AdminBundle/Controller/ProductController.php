@@ -93,8 +93,10 @@ class ProductController extends CommonController
      */
     public function deleteAction(Request $request, $id)
     {
-        $entity = $this->getProductById($id);
-        $this->productService->remove($entity);
+        if((bool)$this->validateEmptyPost($request)){
+            $entity = $this->getProductById($id);
+            $this->productService->remove($entity);
+        }
 
         return $this->redirect($this->generateUrl('main_page'));
     }

@@ -10,3 +10,10 @@ services:
         - [setRouter, ["@router"]]
         - [setTemplating, ["@templating"]]
         - [setFormFactory, ["@form.factory"]]
+  shop.common.twig_extension:
+      class: Shop\CommonBundle\Twig\CommonExtension
+      public: false
+      tags:
+          - { name: twig.extension }
+      calls:
+        - [setFormFactory, ["@form.factory"]]

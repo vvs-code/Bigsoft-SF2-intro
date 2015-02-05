@@ -2,6 +2,7 @@
 namespace Shop\CommonBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Templating\EngineInterface;
+use Shop\CommonBundle\Form\EmptyFormType;
 
 /**
  * Class CommonController
@@ -130,6 +132,20 @@ class CommonController
     protected function redirect($url)
     {
         return new RedirectResponse($url);
+    }
+
+    /**
+     * @param Request $request
+     * @return null|Form
+     */
+    protected function validateEmptyPost(Request $request) {
+        $form = $this->createForm(new EmptyFormType());
+        $form->handleRequest($request);
+        if($form->isValid()) {
+            return $form;
+        } else {
+            return null;
+        }
     }
 
 }
