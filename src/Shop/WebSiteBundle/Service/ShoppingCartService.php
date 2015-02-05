@@ -66,7 +66,16 @@ class ShoppingCartService implements ShoppingCartServiceInterface
      */
     public function getCartSum()
     {
-        return 'DEBUG:1987233$';
+        $sum = 0;
+        /**
+         * @var Product[]
+         */
+        $arr = $this->getCartProducts();
+        foreach($arr as $product) {
+            $sum += $product->getPrice();
+        }
+
+        return $sum;
     }
 
     /**
@@ -74,7 +83,7 @@ class ShoppingCartService implements ShoppingCartServiceInterface
      */
     public function clearCart()
     {
-        // TODO: Implement clearCart() method.
+        $this->setSessionCart([]);
     }
 
     /**
@@ -82,9 +91,18 @@ class ShoppingCartService implements ShoppingCartServiceInterface
      */
     public function getCartProducts()
     {
-        // TODO: Implement getCartProducts() method.
+        $arr = [];
+        $cart = $this->getSessionCart();
+        foreach($cart as $productId) {
+            $arr[] = $this->productService->findById($productId);
+        }
+
+        return $arr;
     }
 
+    /**
+     * @return array
+     */
     private function getSessionCart() {
         $cart = $this->session->get($this::SESSION_CART_KEY);
         if(!is_array($cart)) {
@@ -93,6 +111,9 @@ class ShoppingCartService implements ShoppingCartServiceInterface
         return $cart;
     }
 
+    /**
+     * @param array $cart
+     */
     private function setSessionCart(array $cart) {
         $this->session->set($this::SESSION_CART_KEY, $cart);
     }
