@@ -40,14 +40,6 @@ class IndexController extends Controller\CommonController
     }
 
     /**
-     * @Route("/cart", name="cart_page")
-     */
-    public function cartAction()
-    {
-        return $this->render('WebSiteBundle:Index:cart.html.twig');
-    }
-
-    /**
      * @param ProductService $productService
      */
     public function setProductService(ProductService $productService)

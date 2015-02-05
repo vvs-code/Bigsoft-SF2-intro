@@ -43,7 +43,7 @@ class ShoppingCartController extends Controller\CommonController
     }
 
     /**
-     * @Route("/list", name="shopping_cart_list")
+     * @Route("/", name="shopping_cart_list")
      * @Template()
      */
     public function listAction(Request $request)
@@ -60,9 +60,18 @@ class ShoppingCartController extends Controller\CommonController
      * @Method("POST")
      */
     public function addToCartAction(Request $request, $id) {
-            $this->shoppingCartService->addToCartById($id);
-            $referer = $request->headers->get('referer');
-            return $this->redirect($referer);
+        $this->shoppingCartService->addToCartById($id);
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
+    }
 
+    /**
+     * @Route("/clear", name="clear_shopping_cart")
+     * @Method("POST")
+     */
+    public function clearCartAction(Request $request) {
+        $this->shoppingCartService->clearCart();
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
     }
 }
