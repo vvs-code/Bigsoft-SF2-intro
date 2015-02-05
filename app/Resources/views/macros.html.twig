@@ -8,9 +8,7 @@
 {% macro emptyPostForm(action, btnName) %}
     <form name="form" method="post" action="{{ action }}">
         {% if btnName %}
-            <button type="submit" id="form_submit" name="form[submit]">{{ btnName }}</button>
-        {% else %}
-            <button type="submit" id="form_submit" name="form[submit]">Submit</button>
+            <button type="submit" id="form_submit" name="form[submit]">{{ btnName|default('Submit') }}</button>
         {% endif %}
     </form>
 {% endmacro %}
