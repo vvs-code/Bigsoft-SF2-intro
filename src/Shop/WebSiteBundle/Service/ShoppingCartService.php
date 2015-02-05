@@ -58,7 +58,7 @@ class ShoppingCartService implements ShoppingCartServiceInterface
      */
     public function getCartAmount()
     {
-        return 'DEBUG:'.count($this->session->get($this::SESSION_CART_KEY));
+        return count($this->session->get($this::SESSION_CART_KEY));
     }
 
     /**
