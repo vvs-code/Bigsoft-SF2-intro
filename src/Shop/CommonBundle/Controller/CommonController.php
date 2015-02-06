@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Acl\Exception\Exception;
 use Symfony\Component\Templating\EngineInterface;
 use Shop\CommonBundle\Form\EmptyFormType;
 
@@ -119,7 +118,7 @@ class CommonController
 
     /**
      * @param $text
-     * @throws Exception
+     * @throws NotFoundHttpException
      */
     protected function createNotFoundException($text)
     {

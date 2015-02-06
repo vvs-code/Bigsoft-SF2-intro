@@ -9,7 +9,7 @@ use Shop\CommonBundle\Controller\CommonController;
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Service\ProductService;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Acl\Exception\Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class ProductController
@@ -104,8 +104,7 @@ class ProductController extends CommonController
     /**
      * @param $id
      * @return Product|null
-     * @throws Exception
-     * @throws void
+     * @throws NotFoundHttpException
      */
     protected function getProductById($id)
     {
