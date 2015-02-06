@@ -7,11 +7,6 @@
 
 {% macro emptyPostForm(action, btnName) %}
     {{ form(empty_post_form(action, {buttonName: btnName})) }}
-    {#<form name="form" method="post" action="{{ action }}">#}
-        {#{% if btnName %}#}
-            {#<button type="submit" id="form_submit" name="form[submit]">{{ btnName|default('Submit') }}</button>#}
-        {#{% endif %}#}
-    {#</form>#}
 {% endmacro %}
 
 {% macro header(title) %}
