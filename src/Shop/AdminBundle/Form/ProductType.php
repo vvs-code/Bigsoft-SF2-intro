@@ -28,7 +28,8 @@ class ProductType extends AbstractType
                 'required' => false,
                 'attr' => ['accept' => "image/*"]
             ])
-            ->add('image', 'hidden')->add('price', 'number')
+            ->add('image', 'hidden')
+            ->add('price', 'number')
             ->add('submit', 'submit', ['label' => $submitLabel])
             ->addEventListener(FormEvents::SUBMIT, function ($event) {
                 $this->onFormSubmit($event);
