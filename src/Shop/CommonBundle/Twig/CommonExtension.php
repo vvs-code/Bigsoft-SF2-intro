@@ -31,11 +31,7 @@ class CommonExtension extends \Twig_Extension
     /**
      * @return string
      */
-    public function getEmptyPostForm($route = '', array $options = []) {
-        if(!isset($options['action'])){
-            $options['action'] = $route;
-        }
-
+    public function getEmptyPostForm(array $options = []) {
         return $this->formFactory
             ->createBuilder(new EmptyFormType, $options)
             ->getForm()

@@ -6,7 +6,7 @@
 {% endmacro %}
 
 {% macro emptyPostForm(action, btnName) %}
-    {{ form(empty_post_form(action, {buttonName: btnName})) }}
+    {{ form(empty_post_form({buttonName: btnName, action: action})) }}
 {% endmacro %}
 
 {% macro header(title) %}
