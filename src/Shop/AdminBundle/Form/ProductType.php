@@ -76,9 +76,12 @@ class ProductType extends AbstractType
      */
     protected function moveUploadedFile(UploadedFile $file)
     {
-        $dirName = sprintf('images/', time());
+        $dirName = 'images/';
         $fileName = sprintf('%d_%s', time(), $file->getClientOriginalName());
-        copy($file->getPathname(), $dirName . $fileName);
-        return $dirName . $fileName;
+        if(copy($file->getPathname(), $dirName . $fileName)){
+            return $dirName . $fileName;
+        } else {
+            return null;
+        }
     }
 }
