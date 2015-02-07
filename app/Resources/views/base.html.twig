@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
-        {% stylesheets '@WebSiteBundle/Resources/public/css/*' filter='cssrewrite' %}
+        {% stylesheets '@shop_base_ui_styles' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}"/>
         {% endstylesheets %}
     {% endblock %}
@@ -21,7 +21,7 @@
     </div>
 </div>
 {% block javascripts %}
-    {% javascripts '@WebSiteBundle/Resources/public/js/*' output='js/compiled/script.js' %}
+    {% javascripts '@shop_base_ui_scripts' output='js/compiled/script.js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
