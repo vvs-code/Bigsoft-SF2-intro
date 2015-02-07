@@ -9,7 +9,7 @@ use Shop\CommonBundle\Controller\CommonController;
 use Shop\WebSiteBundle\Entity\Product;
 use Shop\WebSiteBundle\Service\ProductService;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Acl\Exception\Exception;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class ProductController
@@ -76,6 +76,7 @@ class ProductController extends CommonController
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->productService->save($entity);
+            return $this->redirect($request->headers->get('referrer'));
         }
         return [
             'entity' => $entity,
@@ -93,19 +94,19 @@ class ProductController extends CommonController
      */
     public function deleteAction(Request $request, $id)
     {
-        if((bool)$this->validateEmptyPost($request)){
+        if($this->validateEmptyPost($request)){
             $entity = $this->getProductById($id);
             $this->productService->remove($entity);
+            return $this->redirect('main_page');
         }
 
-        return $this->redirect($this->generateUrl('main_page'));
+        return $this->redirect($request->headers->get('referrer'));
     }
 
     /**
      * @param $id
      * @return Product|null
-     * @throws Exception
-     * @throws void
+     * @throws NotFoundHttpException
      */
     protected function getProductById($id)
     {

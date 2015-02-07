@@ -3,6 +3,7 @@ namespace Shop\CommonBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class EmptyFormType extends AbstractType
 {
@@ -12,18 +13,11 @@ class EmptyFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $settings = $builder->getData();
-        $btnName = isset($settings['buttonName'])? $settings['buttonName']: 'Submit';
-        $action = isset($settings['action'])? $settings['action']: '';
-        $hiddenFields = (isset($settings['hidden']) && is_array($settings['hidden']))? $settings['hidden']: [];
+        $builder->setAction($options['action']);
 
-        if(!empty($action)){
-            $builder->setAction($action);
-        }
+        $builder->add('submit', 'submit', ['label' => $options['buttonName']]);
 
-        $builder->add('submit', 'submit', ['label' => $btnName]);
-
-        foreach($hiddenFields as $key => $value) {
+        foreach($options['hidden'] as $key => $value) {
             $builder->add($key, 'hidden', [
                 'attr' => ['value' => $value]
             ]);
@@ -36,5 +30,16 @@ class EmptyFormType extends AbstractType
     public function getName()
     {
         return 'shop_websitebundle_product';
+    }
+
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults([
+            'buttonName' => 'Submit',
+            'action' => '',
+            'hidden' => []
+        ]);
     }
 }

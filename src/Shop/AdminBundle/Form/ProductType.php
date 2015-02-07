@@ -28,7 +28,8 @@ class ProductType extends AbstractType
                 'required' => false,
                 'attr' => ['accept' => "image/*"]
             ])
-            ->add('image', 'hidden')->add('price', 'number')
+            ->add('image', 'hidden')
+            ->add('price', 'number')
             ->add('submit', 'submit', ['label' => $submitLabel])
             ->addEventListener(FormEvents::SUBMIT, function ($event) {
                 $this->onFormSubmit($event);
@@ -76,9 +77,12 @@ class ProductType extends AbstractType
      */
     protected function moveUploadedFile(UploadedFile $file)
     {
-        $dirName = sprintf('images/', time());
+        $dirName = 'images/';
         $fileName = sprintf('%d_%s', time(), $file->getClientOriginalName());
-        copy($file->getPathname(), $dirName . $fileName);
-        return $dirName . $fileName;
+        if(copy($file->getPathname(), $dirName . $fileName)){
+            return $dirName . $fileName;
+        } else {
+            return null;
+        }
     }
 }
