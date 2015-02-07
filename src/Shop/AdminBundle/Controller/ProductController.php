@@ -97,6 +97,7 @@ class ProductController extends CommonController
         if($this->validateEmptyPost($request)){
             $entity = $this->getProductById($id);
             $this->productService->remove($entity);
+            return $this->redirect('main_page');
         }
 
         return $this->redirect($request->headers->get('referrer'));
