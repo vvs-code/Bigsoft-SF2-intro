@@ -93,7 +93,7 @@ class ProductController extends CommonController
      */
     public function deleteAction(Request $request, $id)
     {
-        if((bool)$this->validateEmptyPost($request)){
+        if($this->validateEmptyPost($request)){
             $entity = $this->getProductById($id);
             $this->productService->remove($entity);
         }
