@@ -76,6 +76,7 @@ class ProductController extends CommonController
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->productService->save($entity);
+            return $this->redirect($request->headers->get('referrer'));
         }
         return [
             'entity' => $entity,
@@ -98,7 +99,7 @@ class ProductController extends CommonController
             $this->productService->remove($entity);
         }
 
-        return $this->redirect($this->generateUrl('main_page'));
+        return $this->redirect($request->headers->get('referrer'));
     }
 
     /**
