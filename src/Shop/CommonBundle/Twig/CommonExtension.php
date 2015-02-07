@@ -33,7 +33,7 @@ class CommonExtension extends \Twig_Extension
      */
     public function getEmptyPostForm(array $options = []) {
         return $this->formFactory
-            ->createBuilder(new EmptyFormType, $options)
+            ->createBuilder(new EmptyFormType, null, $options)
             ->getForm()
             ->createView();
     }
