@@ -84,7 +84,8 @@ class ProductService implements ProductServiceInterface
      * @param $id
      * @return mixed
      */
-    public function findById($id){
+    public function findById($id)
+    {
         return $this->productRepository->find($id);
     }
 

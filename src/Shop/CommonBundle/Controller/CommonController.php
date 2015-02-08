@@ -137,7 +137,8 @@ class CommonController
      * @param Request $request
      * @return boolean
      */
-    protected function validateEmptyPost(Request $request) {
+    protected function validateEmptyPost(Request $request)
+    {
         $form = $this->createForm(new EmptyFormType());
         $form->handleRequest($request);
         if($form->isValid()) {
