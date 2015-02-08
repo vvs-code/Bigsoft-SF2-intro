@@ -38,7 +38,7 @@ class ProductController extends CommonController
         $form->handleRequest($request);
         if ($form->isValid()) {
             $this->productService->save($entity);
-            return $this->redirect($this->generateUrl('admin_product_show', ['id' => $entity->getId()]));
+            return $this->redirect('main_page');
         }
         return [
             'entity' => $entity,
@@ -76,7 +76,7 @@ class ProductController extends CommonController
         $editForm->handleRequest($request);
         if ($editForm->isValid()) {
             $this->productService->save($entity);
-            return $this->redirect($request->headers->get('referrer'));
+            return $this->redirect('main_page');
         }
         return [
             'entity' => $entity,
@@ -100,6 +100,7 @@ class ProductController extends CommonController
             return $this->redirect('main_page');
         }
 
+        // On error - do not redirect user on other page
         return $this->redirect($request->headers->get('referrer'));
     }
 
