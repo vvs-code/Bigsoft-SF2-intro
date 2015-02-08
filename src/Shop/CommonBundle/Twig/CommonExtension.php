@@ -12,11 +12,11 @@ class CommonExtension extends \Twig_Extension
     protected $formFactory;
 
     /**
-     * @param FormFactory $ff
+     * @param FormFactory $formFactory
      */
-    public function setFormFactory(FormFactory $ff)
+    public function setFormFactory(FormFactory $formFactory)
     {
-        $this->formFactory = $ff;
+        $this->formFactory = $formFactory;
     }
 
     /**
