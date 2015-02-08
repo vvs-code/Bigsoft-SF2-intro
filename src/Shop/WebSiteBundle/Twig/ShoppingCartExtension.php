@@ -22,19 +22,19 @@ class ShoppingCartExtension extends \Twig_Extension
      */
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
-        );
+        return [
+            new \Twig_SimpleFilter('price', [$this, 'priceFilter']),
+        ];
     }
 
     /**
      * {@inheritdoc}
      */
     public function getFunctions() {
-        return array(
+        return [
             'shopping_cart_amount' => new \Twig_Function_Method($this, 'shoppingCartAmount'),
             'shopping_cart_sum' => new \Twig_Function_Method($this, 'shoppingCartSum')
-        );
+        ];
     }
 
     /**
