@@ -30,7 +30,8 @@ class ShoppingCartController extends Controller\CommonController
     /**
      * @param ShoppingCartService $shoppingCartService
      */
-    public function setShoppingCartService(ShoppingCartService $shoppingCartService) {
+    public function setShoppingCartService(ShoppingCartService $shoppingCartService)
+    {
         $this->shoppingCartService = $shoppingCartService;
     }
 
@@ -59,7 +60,8 @@ class ShoppingCartController extends Controller\CommonController
      * })
      * @Method("POST")
      */
-    public function addToCartAction(Request $request, $id) {
+    public function addToCartAction(Request $request, $id)
+    {
         if((bool)$this->validateEmptyPost($request)){
             $this->shoppingCartService->addToCartById($id);
         }
@@ -71,7 +73,8 @@ class ShoppingCartController extends Controller\CommonController
      * @Route("/clear", name="clear_shopping_cart")
      * @Method("POST")
      */
-    public function clearCartAction(Request $request) {
+    public function clearCartAction(Request $request)
+    {
         if((bool)$this->validateEmptyPost($request)) {
             $this->shoppingCartService->clearCart();
         }

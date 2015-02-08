@@ -26,7 +26,8 @@ class ShoppingCartService implements ShoppingCartServiceInterface
      */
     private $session;
 
-    public function setProductRepository(ProductService $productService) {
+    public function setProductRepository(ProductService $productService)
+    {
         $this->productService = $productService;
     }
 
@@ -103,7 +104,8 @@ class ShoppingCartService implements ShoppingCartServiceInterface
     /**
      * @return array
      */
-    private function getSessionCart() {
+    private function getSessionCart()
+    {
         $cart = $this->session->get($this::SESSION_CART_KEY);
         if(!is_array($cart)) {
             $cart = [];
@@ -114,7 +116,8 @@ class ShoppingCartService implements ShoppingCartServiceInterface
     /**
      * @param array $cart
      */
-    private function setSessionCart(array $cart) {
+    private function setSessionCart(array $cart)
+    {
         $this->session->set($this::SESSION_CART_KEY, $cart);
     }
 }

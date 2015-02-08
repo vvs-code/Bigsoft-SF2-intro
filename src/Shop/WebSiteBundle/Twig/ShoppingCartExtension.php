@@ -13,7 +13,8 @@ class ShoppingCartExtension extends \Twig_Extension
     /**
      * @param ShoppingCartService $shoppingCartService
      */
-    public function setShoppingCartService(ShoppingCartService $shoppingCartService) {
+    public function setShoppingCartService(ShoppingCartService $shoppingCartService)
+    {
         $this->shoppingCartService = $shoppingCartService;
     }
 
@@ -30,7 +31,8 @@ class ShoppingCartExtension extends \Twig_Extension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return [
             'shopping_cart_amount' => new \Twig_Function_Method($this, 'shoppingCartAmount'),
             'shopping_cart_sum' => new \Twig_Function_Method($this, 'shoppingCartSum')
@@ -40,14 +42,16 @@ class ShoppingCartExtension extends \Twig_Extension
     /**
      * @return int
      */
-    public function shoppingCartAmount() {
+    public function shoppingCartAmount()
+    {
         return $this->shoppingCartService->getCartAmount();
     }
 
     /**
      * @return int
      */
-    public function shoppingCartSum() {
+    public function shoppingCartSum()
+    {
         return $this->shoppingCartService->getCartSum();
     }
 
