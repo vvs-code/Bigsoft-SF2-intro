@@ -163,14 +163,16 @@ Class Product implements \Serializable
     /**
      * @return UploadedFile
      */
-    public function getFile() {
+    public function getFile()
+    {
         return $this->file;
     }
 
     /**
      * @param UploadedFile $file
      */
-    public function setFile(UploadedFile $file) {
+    public function setFile(UploadedFile $file)
+    {
         $this->file = $file;
     }
 }

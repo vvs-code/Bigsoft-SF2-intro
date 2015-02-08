@@ -47,7 +47,8 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
     /**
      * Load products fixtures
      */
-    private function loadProducts() {
+    private function loadProducts()
+    {
         /**
          * @var ProductService
          */
@@ -69,7 +70,8 @@ class FixtureLoader implements FixtureInterface, ContainerAwareInterface
     /**
      * Load users fixtures
      */
-    private function loadUsers() {
+    private function loadUsers()
+    {
         /**
          * @var UserServiceInterface
          */

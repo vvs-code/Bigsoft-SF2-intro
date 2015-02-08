@@ -22,7 +22,8 @@ class CommonExtension extends \Twig_Extension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return [
             'empty_post_form' => new \Twig_Function_Method($this, 'getEmptyPostForm')
         ];
@@ -31,7 +32,8 @@ class CommonExtension extends \Twig_Extension
     /**
      * @return string
      */
-    public function getEmptyPostForm(array $options = []) {
+    public function getEmptyPostForm(array $options = [])
+    {
         return $this->formFactory
             ->createBuilder(new EmptyFormType, null, $options)
             ->getForm()
@@ -41,7 +43,8 @@ class CommonExtension extends \Twig_Extension
     /**
      * {@inheritdoc}
      */
-    public function getName() {
+    public function getName()
+    {
         return 'common_extension';
     }
 }

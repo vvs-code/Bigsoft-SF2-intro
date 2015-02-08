@@ -106,7 +106,7 @@ class ProductController extends CommonController
 
     /**
      * @param $id
-     * @return Product|null
+     * @return Product
      * @throws NotFoundHttpException
      */
     protected function getProductById($id)
