@@ -23,9 +23,9 @@ class CommonExtension extends \Twig_Extension
      * {@inheritdoc}
      */
     public function getFunctions() {
-        return array(
+        return [
             'empty_post_form' => new \Twig_Function_Method($this, 'getEmptyPostForm')
-        );
+        ];
     }
 
     /**
