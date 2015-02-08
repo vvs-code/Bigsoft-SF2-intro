@@ -49,10 +49,14 @@ assetic:
             inputs:
                 - '@WebSiteBundle/Resources/public/js/jquery-1.11.2.js'
                 - '@WebSiteBundle/Resources/public/js/main.js'
+            options:
+                output: js/shop_base_ui_scripts.js
         shop_base_ui_styles:
             inputs:
                 - '@WebSiteBundle/Resources/public/css/bootstrap.css'
                 - '@WebSiteBundle/Resources/public/css/styles.css'
+            options:
+                output: css/shop_base_ui_styles.css
 
 # Doctrine Configuration
 doctrine:
