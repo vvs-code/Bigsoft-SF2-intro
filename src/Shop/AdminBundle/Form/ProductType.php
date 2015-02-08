@@ -79,7 +79,7 @@ class ProductType extends AbstractType
     {
         $dirName = 'images/';
         $fileName = sprintf('%d_%s', time(), $file->getClientOriginalName());
-        if(copy($file->getPathname(), $dirName . $fileName)){
+        if(@copy($file->getPathname(), $dirName . $fileName)){
             return $dirName . $fileName;
         } else {
             return null;

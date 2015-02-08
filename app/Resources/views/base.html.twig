@@ -21,7 +21,7 @@
     </div>
 </div>
 {% block javascripts %}
-    {% javascripts '@shop_base_ui_scripts' output='js/compiled/script.js' %}
+    {% javascripts '@shop_base_ui_scripts' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}
