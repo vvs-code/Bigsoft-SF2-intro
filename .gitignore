@@ -16,3 +16,5 @@ atlassian-ide-plugin.xml
 app/SymfonyRequirements.php
 web/images
 web/assetic
+web/css
+web/js
