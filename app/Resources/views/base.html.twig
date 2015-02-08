@@ -6,10 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/shop_base_ui_styles.css') }}"/>
     {% block stylesheets %}
-        {% stylesheets '@shop_base_ui_styles' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}"/>
-        {% endstylesheets %}
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
@@ -21,9 +19,7 @@
     </div>
 </div>
 {% block javascripts %}
-    {% javascripts '@shop_base_ui_scripts' %}
-    <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
 {% endblock %}
+<script src="{{ asset('js/shop_base_ui_scripts.js') }}"></script>
 </body>
 </html>
