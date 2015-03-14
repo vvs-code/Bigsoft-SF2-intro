@@ -1,0 +1,91 @@
+{% macro adminHeader() %}
+    <li><a href="{{ path('shop_admin_index') }}">go to admin page</a></li>
+    <li><a href="{{ path('admin_product_new') }}">Add product</a></li>
+{% endmacro %}
+
+{% macro shopingCartHeader() %}
+    <li><a href="#" class="shopping-cart-amount">{{  shopping_cart_amount() }}</a></li>
+    <li><a href="#" class="shopping-cart-sum">{{  shopping_cart_sum() }}$</a></li>
+{% endmacro %}
+
+{% macro emptyPostForm(action, btnName) %}
+    {{ form(empty_post_form({buttonName: btnName, action: action})) }}
+{% endmacro %}
+
+{% macro header(title) %}
+    {% set menuList = [
+    {'name' : 'Main', 'route' : path('main_page')},
+    {'name' : 'Contacts', 'route' : path('contacts_page')},
+    {'name' : 'About', 'route' : path('about_page')},
+    { 'name' : 'Cart', 'route' : path('shopping_cart_list')},
+    ] %}
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">{% if title %}{{ title }}{% endif %}</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    {% for menu in menuList %}
+                        <li><a href="{{ menu.route }}">{{ menu.name }}</a></li>
+                    {% endfor %}
+                    {% if app.user %}
+                        {% if is_granted('ROLE_ADMIN') -%}
+                            {{ _self.adminHeader() }}
+                        {% else %}
+                            {{ _self.shopingCartHeader() }}
+                        {% endif %}
+                        <li>
+                            <strong>{{ app.user.username }}</strong>
+                        </li>
+                        <li>
+                            <a href="{{ path('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        {{ _self.shopingCartHeader() }}
+                        <li>
+                            <a href="{{ path('shop_login') }}">Log in</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+{% endmacro %}
+
+{% macro footer() %}
+    <div class="footer">
+        (c)2014
+    </div>
+{% endmacro %}
+
+{% macro productActionsBlock(product) %}
+    {% if is_granted('ROLE_ADMIN') -%}
+        <ul>
+            <li>
+                <a href="{{ path('admin_product_edit', { 'id': product.id }) }}">
+                    Edit
+                </a>
+            </li>
+            <li>
+                {{ _self.emptyPostForm(path('admin_product_delete', { 'id': product.id }), "Remove") }}
+            </li>
+        </ul>
+
+    {% endif %}
+{% endmacro %}
+
+{% macro printProduct(product) %}
+    <img src="{{ product.image }}" align="left"/><strong>{{ product.title }}</strong>
+    <div class="to-cart">{{ _self.emptyPostForm(path('add_to_shopping_cart',  { 'id': product.id }), 'Add to cart') }}</div>
+    <p>{{ product.description|raw }}</p>{{ _self.productActionsBlock(product) }}
+{% endmacro %}

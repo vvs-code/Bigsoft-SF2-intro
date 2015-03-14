@@ -1,0 +1,7 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Product edit{% endblock %}
+{% block body -%}
+    <h1>{{ block('title') }}</h1>
+    {{ form(edit_form) }}
+{% endblock %}

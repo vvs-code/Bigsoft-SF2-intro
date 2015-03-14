@@ -1,1 +1,15 @@
-Hello, world!
+{% extends 'base.html.twig' %}
+
+{% block title %}Main page{% endblock %}
+{% block body %}
+    <ul class="pagination">
+        {% for product in pagination %}
+            <li>{{ common.printProduct(product) }}</li>
+        {% else %}
+            <li>No items</li>
+        {% endfor %}
+    </ul>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

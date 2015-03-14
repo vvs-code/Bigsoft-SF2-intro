@@ -1,9 +1,19 @@
 parameters:
     shop.common.common_controller: Shop\CommonBundle\Controller\CommonController
+    shop.common.fixtures_path: %kernel.root_dir%/../src/Shop/CommonBundle/Resources/data/
 
 services:
   shop.common.common_controller:
       abstract: true
       class: %shop.common.common_controller%
       calls:
+        - [setRouter, ["@router"]]
         - [setTemplating, ["@templating"]]
+        - [setFormFactory, ["@form.factory"]]
+  shop.common.twig_extension:
+      class: Shop\CommonBundle\Twig\CommonExtension
+      public: false
+      tags:
+          - { name: twig.extension }
+      calls:
+        - [setFormFactory, ["@form.factory"]]

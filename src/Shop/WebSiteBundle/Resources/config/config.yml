@@ -1,7 +1,43 @@
 parameters:
     shop.website.index_controller: Shop\WebSiteBundle\Controller\IndexController
+    shop.website.product_service: Shop\WebSiteBundle\Service\ProductService
+    shop.website.product_repository: Shop\WebSiteBundle\Entity\ProductRepository
+    shop.website.shopping_cart_service: Shop\WebSiteBundle\Service\ShoppingCartService
+    shop.website.shopping_cart_controller: Shop\WebSiteBundle\Controller\ShoppingCartController
+
 
 services:
+  shop.website.product_repository:
+      class: %shop.website.product_repository%
+      factory_service: doctrine.orm.entity_manager
+      factory_method:  getRepository
+      arguments:
+          - 'Shop\WebSiteBundle\Entity\Product'
+  shop.website.product_service:
+      class: %shop.website.product_service%
+      arguments: ["@shop.website.product_repository"]
+  shop.website.shopping_cart_service:
+      class: %shop.website.shopping_cart_service%
+      calls:
+        - [setProductRepository, ["@shop.website.product_service"]]
+        - [setSession, ["@session"]]
   shop.website.index_controller:
       class: %shop.website.index_controller%
       parent: shop.common.common_controller
+      calls:
+        - [setProductService, ["@shop.website.product_service"]]
+        - [setPaginator, ["@knp_paginator"]]
+        - [setPageQueryKey, ["%page_query_key%"]]
+  shop.website.shopping_cart_controller:
+      class: %shop.website.shopping_cart_controller%
+      parent: shop.common.common_controller
+      calls:
+        - [setShoppingCartService, ["@shop.website.shopping_cart_service"]]
+        - [setProductService, ["@shop.website.product_service"]]
+  shop.website.shopping_cart.twig_extension:
+      class: Shop\WebSiteBundle\Twig\ShoppingCartExtension
+      public: false
+      tags:
+          - { name: twig.extension }
+      calls:
+        - [setShoppingCartService, ["@shop.website.shopping_cart_service"]]

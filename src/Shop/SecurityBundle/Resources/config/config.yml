@@ -1,0 +1,18 @@
+parameters:
+    shop.security.default_controller: Shop\SecurityBundle\Controller\DefaultController
+    shop.security.user_service: Shop\SecurityBundle\Service\UserService
+    shop.security.user_repository: src\Shop\SecurityBundle\Entity\UserRepository
+
+services:
+  shop.security.default_controller:
+      class: %shop.security.default_controller%
+      parent: shop.common.common_controller
+  shop.security.user_repository:
+      class: %shop.security.user_repository%
+      factory_service: doctrine.orm.entity_manager
+      factory_method:  getRepository
+      arguments:
+          - 'Shop\SecurityBundle\Entity\User'
+  shop.security.user_service:
+      class: %shop.security.user_service%
+      arguments: ["@shop.security.user_repository", "@security.encoder_factory"]

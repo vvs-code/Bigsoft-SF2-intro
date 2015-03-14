@@ -1,3 +1,19 @@
+shop_security:
+    resource: "@ShopSecurityBundle/Resources/config/routing.yml"
+    prefix:   /
+
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
 webSite:
     resource: "@WebSiteBundle/Resources/config/routing.yml"
     prefix:   /
+
+# Leaved here cause this routes used as patteers at security.yml
+# Maybe it's better to move this routes to ShopSecureBundle routing.yaml
+login_check:
+    pattern:   /login_check
+
+logout:
+    pattern: /logout

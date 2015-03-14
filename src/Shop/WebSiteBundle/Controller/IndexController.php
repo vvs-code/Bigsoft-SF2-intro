@@ -1,9 +1,12 @@
 <?php
-
 namespace Shop\WebSiteBundle\Controller;
 
-use Shop\CommonBundle\Controller;
+use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Shop\CommonBundle\Controller;
+use Shop\WebSiteBundle\Entity\Product;
+use Shop\WebSiteBundle\Service\ProductService;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route(service="shop.website.index_controller")
@@ -11,10 +14,53 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class IndexController extends Controller\CommonController
 {
     /**
-     * @Route("/")
+     * @var string
      */
-    public function indexAction()
+    private $pageQueryKey;
+
+    /**
+     * @var ProductService
+     */
+    private $productService;
+
+    /**
+     * @var Paginator KnpPaginator
+     */
+    protected $paginator;
+
+    /**
+     * @Route("/", name="main_page")
+     */
+    public function indexAction(Request $request)
     {
-        return $this->render('WebSiteBundle:Index:index.html.twig');
+        $page = $request->query->get($this->pageQueryKey, 1);
+        $pagination = $this->productService->getPagination($this->paginator, $page);
+
+        return $this->render('WebSiteBundle:Index:index.html.twig', ['pagination' => $pagination]);
     }
+
+    /**
+     * @param ProductService $productService
+     */
+    public function setProductService(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
+
+    /**
+     * @param Paginator $paginator
+     */
+    public function setPaginator(Paginator $paginator)
+    {
+        $this->paginator = $paginator;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function setPageQueryKey($key)
+    {
+        $this->pageQueryKey = $key;
+    }
+
 }

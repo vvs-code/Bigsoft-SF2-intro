@@ -1,5 +1,4 @@
 <?php
-
 namespace Shop\CommonBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;

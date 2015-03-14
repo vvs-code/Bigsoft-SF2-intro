@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shopping cart list{% endblock %}
+{% block body %}
+    <ul class="pagination">
+
+    </ul>
+
+    <table class="table cart-list">
+        {% if products is empty %}
+            <tr><td>Cart is empty</td></tr>
+        {%  else %}
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Cost</th>
+            </tr>
+            </thead>
+            {% for product in products %}
+                <tr><td>{{ loop.index }}</td><td>{{ product.title }}</td><td>{{ product.price }}</td></tr>
+            {% endfor %}
+            <tr><td colspan="2">Total: {{ shopping_cart_amount() }}</td><td>{{ shopping_cart_sum() }}${{ common.emptyPostForm(path('clear_shopping_cart'), 'Clear cart') }}</td></tr>
+        {% endif %}
+    </table>
+{% endblock %}
+

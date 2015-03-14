@@ -1,3 +1,15 @@
 web_site:
   resource: "@WebSiteBundle/Controller"
   type:     annotation
+
+about_page:
+    path: /page/about
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'WebSiteBundle:Index:about.html.twig'
+
+contacts_page:
+    path: /page/contacts
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'WebSiteBundle:Index:contacts.html.twig'

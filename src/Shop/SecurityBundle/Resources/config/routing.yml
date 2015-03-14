@@ -1,0 +1,3 @@
+shop_security_homepage:
+  resource: "@ShopSecurityBundle/Controller"
+  type:     annotation
